@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mefkure Kütüphanesi | Hüseyin Akdeniz</title>
+    <style>
+        :root {
+            --kitap-karanlik: #05140e;
+            --yaprak-yesil: #0a2f1d;
+            --altin-yazma: #cfac4a;
+            --kagit-rengi: #121c17;
+            --kutsal-beyaz: #e4ece8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: var(--kitap-karanlik);
+            color: var(--kutsal-beyaz);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* KİTAP KAPAĞI VE BAŞLIK ALANI */
+        header {
+            background: linear-gradient(to bottom, #030d09, var(--kitap-karanlik));
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(207, 172, 74, 0.2);
+        }
+
+        .kitap-ust-not {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--altin-yazma);
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        }
+
+        .muhur-alan {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #8fa399;
+        }
+
+        .muhur-alan strong {
+            color: var(--altin-yazma);
+            border-bottom: 1px double var(--altin-yazma);
+            padding-bottom: 2px;
+        }
+
+        /* REKLAM VİTRİNİ (KİTAP ARASI SPONSORLUK) */
+        .kitap-arasi-reklam {
+            max-width: 1200px;
+            margin: 20px auto 0 auto;
+            width: 95%;
+            background: rgba(207, 172, 74, 0.03);
+            border: 1px double rgba(207, 172, 74, 0.2);
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .reklam-kapsam {
+            color: #8fa399;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .reklam-buton {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--altin-yazma);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid var(--altin-yazma);
+            padding: 5px 15px;
+            transition: 0.3s;
+        }
+
+        .reklam-buton:hover {
+            background: var(--altin-yazma);
+            color: var(--kitap-karanlik);
+        }
+
+        /* KİTAP ANA GÖVDESİ */
+        .kitap-tasarim {
+            display: flex;
+            max-width: 1300px;
+            margin: 30px auto;
+            width: 95%;
+            background-color: var(--kagit-rengi);
+            border: 1px solid rgba(207, 172, 74, 0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border-radius: 4px;
+            min-height: 650px;
+        }
+
+        /* CİLT / SOL FİHRİST */
+        .cilt-fihrist {
+            width: 30%;
+            background-color: rgba(5, 20, 14, 0.7);
+            border-right: 1px solid rgba(207, 172, 74, 0.15);
+            padding: 45px 25px;
+        }
+
+        .fihrist-baslik {
+            font-size: 1.1rem;
+            color: var(--altin-yazma);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(207, 172, 74, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .fihrist-link {
+            display: block;
+            color: #b3c7be;
+            text-decoration: none;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+        }
+
+        .fihrist-link:hover, .fihrist-link.aktif {
+            color: #ffffff;
+            background: var(--yaprak-yesil);
+            border-left-color: var(--altin-yazma);
+            padding-left: 20px;
+        }
+
+        /* SAĞ YAPRAK / OKUMA ALANI */
+        .kitap-yaprak {
+            width: 70%;
+            padding: 50px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sayfa-icerik {
+            display: none;
+            animation: sayfaCevir 0.5s ease-in-out forwards;
+        }
+
+        .sayfa-icerik.aktif {
+            display: block;
+        }
+
+        .sayfa-icerik h2 {
+            font-size: 2.2rem;
+            color: var(--altin-yazma);
+            font-weight: 400;
+            margin-bottom: 25px;
+            border-bottom: 1px double rgba(207, 172, 74, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .sayfa-icerik p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #d1dfd8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* BİLGİ KUTUSU / SATIR ARASI ÖĞRENİM */
+        .satir-arasi-bilgi {
+            background: rgba(207, 172, 74, 0.05);
+            border-left: 3px solid var(--altin-yazma);
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .satir-arasi-bilgi h4 {
+            color: var(--altin-yazma);
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+        }
+
+        .satir-arasi-bilgi ul {
+            padding-left: 20px;
+            color: #b3c7be;
+        }
+
+        .satir-arasi-bilgi li {
+            margin-bottom: 6px;
+        }
+
+        /* KİTAP ALTI BİLGİLERİ */
+        .kitap-alti-kontroller {
+            border-top: 1px solid rgba(207, 172, 74, 0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #728c80;
+        }
+
+        /* ÇEVRİMİÇİ DAVA SAYACI DEĞİŞİMİ */
+        .okuyucu-odasi {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .okuyucu-sinyal {
+            width: 8px;
+            height: 8px;
+            background-color: #39e38c;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #39e38c;
+        }
+
+        /* ÖZGÜN INSTAGRAM MÜHRÜ */
+        .instagram-dergi {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--altin-yazma);
+            text-decoration: none;
+            border: 1px solid rgba(207, 172, 74, 0.3);
+            padding: 8px 18px;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .instagram-dergi:hover {
+            background: rgba(207, 172, 74, 0.1);
+            box-shadow: 0 0 10px rgba(207, 172, 74, 0.2);
+        }
+
+        /* ANİMASYON */
+        @keyframes sayfaCevir {
+            from { opacity: 0; transform: translateX(15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* MOBİL UYUMLULUK */
+        @media (max-width: 900px) {
+            .kitap-tasarim { flex-direction: column; }
+            .cilt-fihrist { width: 100%; border-right: none; border-bottom: 1px solid rgba(207, 172, 74, 0.15); padding: 25px; }
+            .kitap-yaprak { width: 100%; padding: 30px; }
+            header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KAPAK -->
+    <header>
+        <div class="kitap-ust-not">Mefkure Kütüphanesi</div>
+        <h1>TÜRK-İSLAM VE TURAN ANSİKLOPEDİSİ</h1>
+        <div class="muhur-alan">Bu Dijital Eserin Müellifi ve Kurucusu: <strong>Hüseyin Akdeniz</strong></div>
+    </header>
+
+    <!-- REKLAM VİTRİNİ -->
+    <div class="kitap-arasi-reklam">
+        <div class="reklam-kapsam">
+            "Bu ilim meclisinde markanızın, derginizin veya milli projelerinizin yer almasını istiyorsanız sayfa arası sponsorluk bandına katılabilirsiniz."
+        </div>
+        <a href="mailto:reklam@mefkurekutuphanesi.com" class="reklam-buton">Kütüphane İletişim & Reklam Paneli</a>
+    </div>
+
+    <!-- KİTAP MİMARİSİ -->
+    <div class="kitap-tasarim">
+        
+        <!-- SOL: FİHRİST (İNDEKS) -->
+        <div class="cilt-fihrist">
+            <div class="fihrist-baslik">İçindekiler</div>
+            <div class="fihrist-link aktif" onclick="sayfaDegistir(this, 'sayfa-giris')">I. Mukaddeme (Giriş)</div>
+            <div class="fihrist-link" onclick="sayfaDegistir(this, 'sayfa-milliyetcilik')">II. Türk-İslam Ülküsü</div>
+            <div class="fihrist-link" onclick="sayfaDegistir(this, 'sayfa-turancilik')">III. Turan ve Kızılelma</div>
+        </div>
+
+        <!-- SAĞ: YAPRAK (OKUMA PENCERESİ) -->
+        <div class="kitap-yaprak">
+            
+            <!-- SAYFA 1: GİRİŞ -->
+            <div id="sayfa-giris" class="sayfa-icerik aktif">
+                <h2>I. Mukaddeme</h2>
+                <p>Kutlu bir geçmişin izinde, asil bir geleceği inşa etmek amacıyla kaleme alınan bu dijital kütüphane; Türk milletinin tarihi boyunca üstlendiği ilahi misyonun ve cihanşümul nizam davasının bir özetidir.</p>
+                <p>Bu eser, kulaktan dolma bilgilerle değil; tarihe yön vermiş büyük mütefekkirlerin ortak bilinciyle yoğrulmuş bir öğrenim rehberidir. Sayfaları çevirdikçe fikrin manevi ve fiziki temellerine şahit olacaksınız.</p>
+                
+                <div class="satir-arasi-bilgi">
+                    <h4>💡 Okuyucuya Not:</h4>
+                    <p style="font-size: 1rem; color: #b3c7be; font-style: italic;">Soldaki fihristi kullanarak sayfalar arasında geçiş yapabilir, her konunun altındaki vesikalardan derinlemesine bilgi edinebilirsiniz.</p>
+                </div>
+            </div>
+
+            <!-- SAYFA 2: MİLLİYETÇİLİK VE ÜLKÜCÜLÜK -->
+            <div id="sayfa-milliyetcilik" class="sayfa-icerik">
+                <h2>II. Türk-İslam Ülküsü</h2>
+                <p>Türk Milliyetçiliği, sadece bir soy bağı savunusu değil; Yüce Allah'ın yeryüzündeki adalet terazisi olma davasıdır. Bizim mefkuremizde bedenimiz asil bir geçmişin taşıyıcısı olan Türklük, ruhumuz ise o bedene hayat ve ahlak veren şanlı İslamiyet'tir.</p>
+                <p>Bu şuur, kula kulluğu reddeder, toplumda ahlakı ve liyakati en üst mertebeye koyar. Irkçılığın kör karanlığına düşmeden, inancın aydınlığında bir vatan ve medeniyet sevdası inşa eder.</p>
+                
+                <div class="satir-arasi-bilgi">
+                    <h4>📚 İlmi Kaynakça & Öğrenim Belgeleri:</h4>
+                    <ul>
+                        <li><strong>Seyyid Ahmed Arvasi - "Türk-İslam Ülküsü":</strong> Fikrin sosyolojik, felsefi ve manevi temellerini anlatan en hacimli başeser.</li>
+                        <li><strong>Alparslan Türkeş - "Dokuz Işık":</strong> Ahlakçılık, ilimcilik ve toplumculuk gibi temel ilkeleri barındıran milli doktrin metni.</li>
+                        <li><strong>Hoca Ahmet Yesevi - "Divan-ı Hikmet":</strong> Türkistan'dan Anadolu'ya ruh veren ahlaki öğretilerin kaynağı.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SAYFA 3: TURANCILIK -->
+            <div id="sayfa-turancilik" class="sayfa-icerik">
+                <h2>III. Turan ve Kızılelma</h2>
+                <p>Turancılık; yeryüzündeki tüm Türk boylarının, kültür ve gönül coğrafyamızın ortak bir ülkü etrafında birleşmesidir. Bu gaye, ütopik bir hayal değil; dil birliği, fikir birliği ve ekonomik entegrasyonla yürüyen stratejik bir hedeftir.</p>
+                <p>Gaspıralı İsmail Bey'in Kırım'dan yükselttiği ses, bugün Türk Devletleri Teşkilatı ile somut bir gerçekliğe bürünmektedir. Turan, doğudan batıya kurulan bir adalet köprüsüdür.</p>
+                
+                <div class="satir-arasi-bilgi">
+                    <h4>📚 İlmi Kaynakça & Öğrenim Belgeleri:</h4>
+                    <ul>
+                        <li><strong>İsmail Gaspıralı - "Tercüman Gazetesi Yazıları":</strong> "Dilde, fikirde, işte birlik" ilkesinin doğuşu ve eğitim reformları.</li>
+                        <li><strong>Ziya Gökalp - "Türkçülüğün Esasları":</strong> Turan ülküsünün sosyolojik sınırları ve kültürel analizleri.</li>
+                        <li><strong>Nihal Atsız - "Türk Tarihinde Meseleler":</strong> Türk devlet geleneğinin tarihsel sürekliliği üzerine incelemeler.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- KİTAP ALTI / WIDGET ALANI -->
+            <div class="kitap-alti-kontroller">
+                <!-- CANLI SAYAC -->
+                <div class="okuyucu-odasi">
+                    <div class="okuyucu-sinyal"></div>
+                    <div>Şu an bu rahlede <strong id="canli-okuyucu" style="color: #fff;">2,104</strong> kişi okuyor</div>
+                </div>
+
+                <!-- INSTAGRAM -->
+                <a href="https://instagram.com/huseyinakdeniz" target="_blank" class="instagram-dergi">
+                    📖 Hüseyin Akdeniz Resmi Instagram Sayfası
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ALT KISIM -->
+    <footer style="margin-top: auto; padding: 30px; text-align: center; font-size: 0.9rem; color: #42574d; border-top: 1px solid rgba(207,172,74,0.05);">
+        Müellif: Hüseyin Akdeniz | 2026 Mefkure Kütüphanesi. interaktif kitap tasarımı.
+    </footer>
+
+    <script>
+        // Sayfa Değiştirme ve Kitap Hissi Verme Kodları
+        function sayfaDegistir(eleman, sayfaId) {
+            // Aktif fihrist linkini temizle
+            document.querySelectorAll('.fihrist-link').forEach(link => {
+                link.classList.remove('aktif');
+            });
+            // Tıklananı aktif yap
+            eleman.classList.add('aktif');
+
+            // Tüm sayfaları gizle
+            document.querySelectorAll('.sayfa-icerik').forEach(sayfa => {
+                sayfa.classList.remove('aktif');
+            });
+            // İlgili sayfayı göster
+            document.getElementById(sayfaId).classList.add('aktif');
+        }
+
+        // Yaşayan Sayaç Mantığı
+        setInterval(function() {
+            const sayac = document.getElementById('canli-okuyucu');
+            let sayi = parseInt(sayac.innerText.replace(',', ''));
+            
+            const degisim = Math.random() > 0.5 ? Math.floor(Math.random() * 3) + 1 : -Math.floor(Math.random() * 2) - 1;
+            sayi += degisim;
+            
+            sayac.innerText = sayi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }, 2500);
+    </script>
+
+</body>
+</html>
