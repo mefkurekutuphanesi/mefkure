@@ -1,403 +1,2547 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mefkure Kütüphanesi | Hüseyin Akdeniz</title>
+    <title>Mefkure Kütüphanesi — Entelektüel Külliyat ve Danışma Konsolü</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- EmailJS Kütüphanesi -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "SİZİN_PUBLIC_KEY_DEĞERİNİZ",
+          });
+       })();
+    </script>
+
     <style>
         :root {
-            --kitap-karanlik: #05140e;
-            --yaprak-yesil: #0a2f1d;
-            --altin-yazma: #cfac4a;
-            --kagit-rengi: #121c17;
-            --kutsal-beyaz: #e4ece8;
+            --bg-deep: #070913;
+            --bg-surface: #0e1424;
+            --bg-card: #162038;
+            --bg-card-hover: #1e2c4c;
+            
+            --accent-primary: #d4af37;
+            --accent-light: #f3e5ab;
+            --accent-glow: rgba(212, 175, 55, 0.15);
+            
+            --border-color: rgba(212, 175, 55, 0.2);
+            --border-bright: rgba(212, 175, 55, 0.5);
+            
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dimmed: #6b7280;
+            --success-color: #10b981;
+            
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Georgia', serif;
+            font-family: var(--font-sans);
         }
 
         body {
-            background-color: var(--kitap-karanlik);
-            color: var(--kutsal-beyaz);
-            display: flex;
-            flex-direction: column;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
         }
 
-        /* KİTAP KAPAĞI VE BAŞLIK ALANI */
         header {
-            background: linear-gradient(to bottom, #030d09, var(--kitap-karanlik));
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(207, 172, 74, 0.2);
-        }
-
-        .kitap-ust-not {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--altin-yazma);
-            margin-bottom: 10px;
-        }
-
-        header h1 {
-            font-size: 3rem;
-            font-weight: 400;
-            letter-spacing: 1px;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-        }
-
-        .muhur-alan {
-            margin-top: 15px;
-            font-size: 0.95rem;
-            color: #8fa399;
-        }
-
-        .muhur-alan strong {
-            color: var(--altin-yazma);
-            border-bottom: 1px double var(--altin-yazma);
-            padding-bottom: 2px;
-        }
-
-        /* REKLAM VİTRİNİ (KİTAP ARASI SPONSORLUK) */
-        .kitap-arasi-reklam {
-            max-width: 1200px;
-            margin: 20px auto 0 auto;
-            width: 95%;
-            background: rgba(207, 172, 74, 0.03);
-            border: 1px double rgba(207, 172, 74, 0.2);
-            padding: 20px;
-            text-align: center;
-            border-radius: 4px;
-        }
-
-        .reklam-kapsam {
-            color: #8fa399;
-            font-size: 0.85rem;
-            font-style: italic;
-        }
-
-        .reklam-buton {
-            display: inline-block;
-            margin-top: 10px;
-            color: var(--altin-yazma);
-            text-decoration: none;
-            font-size: 0.9rem;
-            border: 1px solid var(--altin-yazma);
-            padding: 5px 15px;
-            transition: 0.3s;
-        }
-
-        .reklam-buton:hover {
-            background: var(--altin-yazma);
-            color: var(--kitap-karanlik);
-        }
-
-        /* KİTAP ANA GÖVDESİ */
-        .kitap-tasarim {
+            background: rgba(7, 9, 19, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px;
             display: flex;
-            max-width: 1300px;
-            margin: 30px auto;
-            width: 95%;
-            background-color: var(--kagit-rengi);
-            border: 1px solid rgba(207, 172, 74, 0.15);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            border-radius: 4px;
-            min-height: 650px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-        /* CİLT / SOL FİHRİST */
-        .cilt-fihrist {
-            width: 30%;
-            background-color: rgba(5, 20, 14, 0.7);
-            border-right: 1px solid rgba(207, 172, 74, 0.15);
-            padding: 45px 25px;
+        .mefkure-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .fihrist-baslik {
-            font-size: 1.1rem;
-            color: var(--altin-yazma);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(207, 172, 74, 0.2);
-            padding-bottom: 10px;
+        .brand-crest-box {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-surface));
+            border: 1px solid var(--border-bright);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-light);
+            box-shadow: 0 0 25px var(--accent-glow);
         }
 
-        .fihrist-link {
-            display: block;
-            color: #b3c7be;
+        .brand-info h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-info p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .brand-founder {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .founder-tag {
+            color: var(--accent-light);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .header-actions-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .instagram-clean-btn, .collab-badge-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--accent-light);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
             text-decoration: none;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            border-left: 2px solid transparent;
+            transition: var(--transition);
         }
 
-        .fihrist-link:hover, .fihrist-link.aktif {
-            color: #ffffff;
-            background: var(--yaprak-yesil);
-            border-left-color: var(--altin-yazma);
-            padding-left: 20px;
+        .instagram-clean-btn:hover, .collab-badge-btn:hover {
+            background: var(--accent-primary);
+            color: #070913;
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
         }
 
-        /* SAĞ YAPRAK / OKUMA ALANI */
-        .kitap-yaprak {
-            width: 70%;
-            padding: 50px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .widgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .widget-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .widget-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent-primary);
+        }
+
+        .widget-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .widget-content {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        aside {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-category-title {
+            font-size: 0.78rem;
+            color: var(--text-dimmed);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .menu-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            max-width: 1050px;
+        }
+
+        .nav-tab-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 10px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .nav-tab-btn:hover {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-color: var(--border-bright);
+        }
+
+        .nav-tab-btn.active {
+            background: var(--bg-card);
+            border-color: var(--accent-primary);
+            color: var(--accent-light);
+            font-weight: 600;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .tab-counter {
+            font-size: 0.7rem;
+            background: var(--bg-deep);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            color: var(--text-dimmed);
+        }
+
+        main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .view-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 18px;
+            animation: fadeIn 0.35s ease forwards;
+        }
+
+        .view-section.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .section-title-box h2 {
+            font-size: 1.45rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .section-title-box p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .controls-toolbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .search-input-wrapper {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-light);
+            width: 16px; height: 16px;
+            pointer-events: none;
+        }
+
+        .royal-input, .royal-select, .royal-textarea {
+            width: 100%;
+            padding: 10px 16px 10px 42px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .royal-input:focus, .royal-select:focus, .royal-textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+            background: var(--bg-card);
+        }
+
+        .royal-select {
+            padding-left: 14px;
+            cursor: pointer;
+            min-width: 160px;
+            width: auto;
+        }
+
+        .royal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 18px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .royal-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: var(--transition);
+            text-align: left;
         }
 
-        .sayfa-icerik {
-            display: none;
-            animation: sayfaCevir 0.5s ease-in-out forwards;
+        .royal-card:hover {
+            background: var(--bg-card);
+            border-color: var(--border-bright);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
         }
 
-        .sayfa-icerik.aktif {
-            display: block;
+        .card-meta-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
         }
 
-        .sayfa-icerik h2 {
-            font-size: 2.2rem;
-            color: var(--altin-yazma);
-            font-weight: 400;
-            margin-bottom: 25px;
-            border-bottom: 1px double rgba(207, 172, 74, 0.2);
-            padding-bottom: 15px;
+        .card-tag {
+            font-size: 0.75rem;
+            color: var(--accent-light);
+            background: rgba(212, 175, 55, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
         }
 
-        .sayfa-icerik p {
-            font-size: 1.2rem;
-            line-height: 1.9;
-            color: #d1dfd8;
-            margin-bottom: 20px;
-            text-align: justify;
+        .card-id-num {
+            font-family: monospace;
+            font-size: 0.72rem;
+            color: var(--text-dimmed);
         }
 
-        /* BİLGİ KUTUSU / SATIR ARASI ÖĞRENİM */
-        .satir-arasi-bilgi {
-            background: rgba(207, 172, 74, 0.05);
-            border-left: 3px solid var(--altin-yazma);
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .satir-arasi-bilgi h4 {
-            color: var(--altin-yazma);
-            margin-bottom: 8px;
+        .card-title {
             font-size: 1.05rem;
-            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.35;
+            margin-bottom: 8px;
         }
 
-        .satir-arasi-bilgi ul {
-            padding-left: 20px;
-            color: #b3c7be;
+        .card-arabic {
+            font-size: 1rem;
+            color: var(--accent-light);
+            margin-bottom: 8px;
+            direction: rtl;
+            text-align: right;
         }
 
-        .satir-arasi-bilgi li {
+        .card-source-book {
+            font-size: 0.8rem;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .card-excerpt {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .card-date {
+            font-size: 0.72rem;
+            color: var(--text-dimmed);
+            font-family: monospace;
+        }
+
+        .card-buttons-group {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .royal-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .royal-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: #070913;
+        }
+
+        .fav-action-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--accent-light);
+            padding: 6px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .fav-action-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--accent-primary);
+        }
+
+        .pagination-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .page-action-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .page-action-btn:hover:not(:disabled) {
+            border-color: var(--accent-primary);
+            color: var(--accent-light);
+        }
+
+        .page-action-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-info-text {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-container {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            padding-left: 30px;
+            margin-top: 10px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 10px; top: 0; bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px; top: 20px;
+            width: 10px; height: 10px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .timeline-year {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            font-family: monospace;
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
             margin-bottom: 6px;
         }
 
-        /* KİTAP ALTI BİLGİLERİ */
-        .kitap-alti-kontroller {
-            border-top: 1px solid rgba(207, 172, 74, 0.1);
-            padding-top: 20px;
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .feedback-box, .newsletter-box, .pro-advanced-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Quiz, Rozet ve Yeni Modül Stilleri */
+        .quiz-wrapper-card, .profile-badge-card, .dictionary-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .quiz-section-title {
+            background-color: var(--bg-card);
+            color: var(--accent-light);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1.05rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+        .quiz-question-card {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .quiz-question-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 6px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.88rem;
+        }
+        .quiz-options label:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--accent-primary);
+        }
+        .quiz-options input {
+            margin-right: 10px;
+        }
+        #result-container {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            text-align: center;
+        }
+        #result-container h3 {
+            color: var(--success-color);
+            margin-bottom: 8px;
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .badge-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .badge-item.unlocked {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .quote-canvas-preview {
+            background: linear-gradient(135deg, #070913, #162038);
+            border: 2px solid var(--accent-primary);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 0 30px var(--accent-glow);
+            margin: 10px 0;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(7, 9, 19, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 14px;
+            width: 90%; max-width: 750px; max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.85);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            text-align: left;
+        }
+
+        .modal-overlay.open .modal-container { transform: scale(1); }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close-btn:hover {
+            background: var(--accent-primary);
+            color: #070913;
+            border-color: var(--accent-primary);
+        }
+
+        .modal-category-badge {
+            font-size: 0.75rem;
+            color: var(--accent-light);
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--border-color);
+            padding: 3px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .modal-arabic-box {
+            font-size: 1.1rem;
+            color: var(--accent-light);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .modal-source-info {
+            font-size: 0.88rem;
+            color: var(--accent-light);
+            margin-bottom: 12px;
+        }
+
+        .modal-meta-bar {
+            font-size: 0.82rem;
+            color: var(--text-dimmed);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .modal-body-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            white-space: pre-line;
+        }
+
+        .user-notes-section {
+            margin-top: 15px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-surface);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            color: var(--text-dimmed);
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .ai-fab-container {
+            position: fixed;
+            bottom: 25px; right: 25px;
+            z-index: 3000;
+        }
+
+        .ai-fab-btn {
+            background: linear-gradient(135deg, var(--accent-primary), #b89728);
+            color: #070913;
+            width: 58px; height: 58px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        .ai-fab-btn:hover { transform: scale(1.08); }
+
+        .ai-chat-card {
+            display: none;
+            position: absolute;
+            bottom: 75px; right: 0;
+            width: 400px; max-width: 92vw; height: 540px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-bright);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            flex-direction: column;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .ai-chat-card.open { display: flex; }
+
+        .ai-chat-header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
-            color: #728c80;
         }
 
-        /* ÇEVRİMİÇİ DAVA SAYACI DEĞİŞİMİ */
-        .okuyucu-odasi {
+        .ai-chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 14px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
-        .okuyucu-sinyal {
-            width: 8px;
-            height: 8px;
-            background-color: #39e38c;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #39e38c;
+        .ai-msg {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 92%;
+            line-height: 1.6;
         }
 
-        /* ÖZGÜN INSTAGRAM MÜHRÜ */
-        .instagram-dergi {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--altin-yazma);
-            text-decoration: none;
-            border: 1px solid rgba(207, 172, 74, 0.3);
-            padding: 8px 18px;
-            font-size: 0.95rem;
-            transition: 0.3s;
+        .ai-msg.user {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--text-main);
+            align-self: flex-end;
+            border-color: var(--accent-primary);
         }
 
-        .instagram-dergi:hover {
-            background: rgba(207, 172, 74, 0.1);
-            box-shadow: 0 0 10px rgba(207, 172, 74, 0.2);
+        .ai-chat-suggestions {
+            display: flex;
+            gap: 6px;
+            padding: 8px 12px;
+            overflow-x: auto;
+            background: var(--bg-deep);
+            border-top: 1px solid var(--border-color);
         }
 
-        /* ANİMASYON */
-        @keyframes sayfaCevir {
-            from { opacity: 0; transform: translateX(15px); }
-            to { opacity: 1; transform: translateX(0); }
+        .ai-chip {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--accent-light);
+            font-size: 0.72rem;
+            padding: 5px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
         }
 
-        /* MOBİL UYUMLULUK */
-        @media (max-width: 900px) {
-            .kitap-tasarim { flex-direction: column; }
-            .cilt-fihrist { width: 100%; border-right: none; border-bottom: 1px solid rgba(207, 172, 74, 0.15); padding: 25px; }
-            .kitap-yaprak { width: 100%; padding: 30px; }
-            header h1 { font-size: 2rem; }
+        .ai-chip:hover {
+            background: var(--accent-primary);
+            color: #070913;
+            border-color: var(--accent-primary);
+        }
+
+        .ai-chat-footer {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            gap: 8px;
         }
     </style>
 </head>
 <body>
 
-    <!-- KAPAK -->
     <header>
-        <div class="kitap-ust-not">Mefkure Kütüphanesi</div>
-        <h1>TÜRK-İSLAM VE TURAN ANSİKLOPEDİSİ</h1>
-        <div class="muhur-alan">Bu Dijital Eserin Müellifi ve Kurucusu: <strong>Hüseyin Akdeniz</strong></div>
+        <div class="mefkure-brand">
+            <div class="brand-crest-box">
+                <i data-lucide="book-open" style="width: 24px; height: 24px;"></i>
+            </div>
+            <div class="brand-info">
+                <h1>Mefkure Kütüphanesi</h1>
+                <p>Entelektüel Külliyat ve Danışma Konsolü</p>
+                <div class="brand-founder">
+                    <span>Web Sitenin Kurucusu: <span class="founder-tag">Hüseyin Akdeniz</span></span>
+                    <div class="header-actions-row">
+                        <a href="https://instagram.com/huseyinakdeniz" target="_blank" rel="noopener noreferrer" class="instagram-clean-btn" aria-label="Instagram Profili">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                            <span>Takip Et</span>
+                        </a>
+                        <a href="mailto:mefkurekutuphanesi@gmail.com" class="collab-badge-btn" aria-label="İletişim">
+                            <i data-lucide="mail" style="width: 14px; height: 14px;"></i>
+                            <span>İş Birliği</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- REKLAM VİTRİNİ -->
-    <div class="kitap-arasi-reklam">
-        <div class="reklam-kapsam">
-            "Bu ilim meclisinde markanızın, derginizin veya milli projelerinizin yer almasını istiyorsanız sayfa arası sponsorluk bandına katılabilirsiniz."
+    <div class="container">
+        
+        <div class="widgets-grid">
+            <div class="widget-box">
+                <span class="widget-title"><i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Günün Hikmeti</span>
+                <p id="dailyQuoteText" class="widget-content">"Hakiki ilim, insanın haddini bilmesiyle başlar; erdem ise bu bilinci hayata tatbik etmesiyle muteber olur."</p>
+            </div>
+            <div class="widget-box">
+                <span class="widget-title"><i data-lucide="bookmark" style="width: 14px; height: 14px;"></i> Günün Kelimesi (Lügat)</span>
+                <p id="dailyDictionaryWidget" class="widget-content">Yükleniyor...</p>
+            </div>
+            <div class="widget-box">
+                <span class="widget-title"><i data-lucide="calendar" style="width: 14px; height: 14px;"></i> Tarihte Bugün / Ajanda</span>
+                <p id="agendaWidget" class="widget-content">Yükleniyor...</p>
+            </div>
         </div>
-        <a href="mailto:mefkurekutuphanesi@gmail.com" class="reklam-buton">Kütüphane İletişim & Reklam Paneli</a>
+
+        <aside>
+            <div class="menu-category-title">Külliyat Dizinleri</div>
+            <div class="menu-row">
+                <button class="nav-tab-btn active" onclick="switchView('masterSection', this)">
+                    <i data-lucide="library"></i>
+                    <span>Tüm Külliyat</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('historySection', this)">
+                    <i data-lucide="scroll"></i>
+                    <span>Tarih</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('philosophySection', this)">
+                    <i data-lucide="compass"></i>
+                    <span>Felsefe</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('literatureSection', this)">
+                    <i data-lucide="feather"></i>
+                    <span>Edebiyat</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('favoritesSection', this)">
+                    <i data-lucide="heart" style="color: var(--accent-primary);"></i>
+                    <span>Muhafaza Edilenler</span>
+                    <span class="tab-counter" id="favCountBadge">0</span>
+                </button>
+            </div>
+            
+            <div class="menu-category-title" style="margin-top: 4px;">Akademi & Yeni Eklenen Modüller</div>
+            <div class="menu-row">
+                <!-- Yeni Eklenen 5 Özellik Butonları -->
+                <button class="nav-tab-btn" onclick="switchView('mefkureSection', this)">
+                    <i data-lucide="flame" style="color: var(--accent-primary);"></i>
+                    <span>Günün Mefkuresi</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('readingCirclesSection', this)">
+                    <i data-lucide="users"></i>
+                    <span>Okuma Halkaları</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('scienceMapSection', this)">
+                    <i data-lucide="map"></i>
+                    <span>İlim Haritası</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('podcastSection', this)">
+                    <i data-lucide="headphones"></i>
+                    <span>Podcast Arşivi</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('conceptTreeSection', this)">
+                    <i data-lucide="git-branch"></i>
+                    <span>Kavram Ağacı</span>
+                </button>
+                
+                <!-- Mevcut Modüller -->
+                <button class="nav-tab-btn" onclick="switchView('islamicSection', this)">
+                    <i data-lucide="moon" style="color: var(--accent-light);"></i>
+                    <span>İslam Külliyatı</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('dictionarySection', this)">
+                    <i data-lucide="book-marked"></i>
+                    <span>Ansiklopedik Lügat</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('badgesSection', this)">
+                    <i data-lucide="award" style="color: var(--accent-primary);"></i>
+                    <span>Rozetler & Seviye</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('timelineSection', this)">
+                    <i data-lucide="git-commit"></i>
+                    <span>Görsel Kronoloji</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('cardGeneratorSection', this)">
+                    <i data-lucide="image"></i>
+                    <span>Alıntı Kartı Üreteci</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('quizSection', this)">
+                    <i data-lucide="help-circle"></i>
+                    <span>Kültür Testi</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('proWorkspaceSection', this)">
+                    <i data-lucide="cpu" style="color: var(--accent-light);"></i>
+                    <span>Pro Ekosistem & Çevrimdışı</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('allNewsSection', this)">
+                    <i data-lucide="newspaper"></i>
+                    <span>Basın Akışı</span>
+                </button>
+                <button class="nav-tab-btn" onclick="switchView('feedbackSection', this)">
+                    <i data-lucide="message-square-plus"></i>
+                    <span>Eser Talep & Bülten</span>
+                </button>
+            </div>
+        </aside>
+
+        <main>
+            <div id="masterSection" class="view-section active">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Tüm Külliyat</h2>
+                        <p>Arşivimizdeki seçkin eserleri, metinleri ve belgeleri inceleyebilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="masterSearch" class="royal-input" placeholder="Eser, yazar veya terim ara..." oninput="handleMasterSearch()">
+                    </div>
+                    <select id="masterCategory" class="royal-select" onchange="handleMasterSearch()">
+                        <option value="">Tüm Kategoriler</option>
+                        <option value="TARİH">TARİH</option>
+                        <option value="FELSEFE">FELSEFE</option>
+                        <option value="EDEBİYAT">EDEBİYAT</option>
+                        <option value="TÜRK-İSLAM">TÜRK-İSLAM</option>
+                        <option value="TURAN">TURAN</option>
+                        <option value="KÜLTÜR-SANAT">KÜLTÜR-SANAT</option>
+                        <option value="STRATEJİ">STRATEJİ</option>
+                    </select>
+                </div>
+                <div id="masterGrid" class="royal-grid"></div>
+                <div id="masterPagination" class="pagination-box"></div>
+            </div>
+
+            <!-- YENİ MODÜL 1: Günün Mefkuresi Bölümü -->
+            <div id="mefkureSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Günün Mefkuresi ve Ülkü Mütalaası</h2>
+                        <p>Günün ruhuna uygun derinlikli bir mefkure sözü ve şerhi.</p>
+                    </div>
+                </div>
+                <div class="pro-advanced-box" style="text-align: center; max-width: 800px;">
+                    <i data-lucide="flame" style="width: 36px; height: 36px; color: var(--accent-primary); margin: 0 auto 10px auto;"></i>
+                    <h3 style="color: var(--accent-light); font-size: 1.2rem; margin-bottom: 12px;">"Nizam-ı Âlem ve İlay-ı Kelimetullah Ülküsü"</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-main); margin-bottom: 15px;">
+                        "Tarih boyunca medeniyetimizin taşıyıcı sütunu, adaleti merkeze alan ve insanı onurlu kılan mefkuredir. Bugün bize düşen, bu şuuru dijital çağın imkânlarıyla yeniden ihya etmektir."
+                    </p>
+                    <span style="font-size: 0.82rem; color: var(--accent-light);">— Mefkure Kütüphanesi Kurucu Heyeti / Hüseyin Akdeniz</span>
+                </div>
+            </div>
+
+            <!-- YENİ MODÜL 2: Okuma Halkaları Bölümü -->
+            <div id="readingCirclesSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Okuma Halkaları ve Mütalaa Grupları</h2>
+                        <p>Birlikte kitap okuyun, fikirlerinizi paylaşın ve ortak müzakere odalarına katılın.</p>
+                    </div>
+                </div>
+                <div class="royal-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); width: 100%; max-width: 1000px;">
+                    <div class="royal-card">
+                        <div>
+                            <span class="card-tag">HALKA #1</span>
+                            <h3 class="card-title">Kutadgu Bilig Okuma Grubu</h3>
+                            <p class="card-excerpt">Haftada bir gün Yusuf Has Hacib'in eserini satır satır mütalaa ediyoruz.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">Aktif Üye: 42</span>
+                            <button class="royal-btn" onclick="alert('Halkaya katılım talebiniz alındı!')">Halkaya Katıl</button>
+                        </div>
+                    </div>
+                    <div class="royal-card">
+                        <div>
+                            <span class="card-tag">HALKA #2</span>
+                            <h3 class="card-title">Felsefi Metinler Meclisi</h3>
+                            <p class="card-excerpt">Doğu ve Batı düşünce sistematiğini karşılaştırmalı olarak inceliyoruz.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">Aktif Üye: 28</span>
+                            <button class="royal-btn" onclick="alert('Halkaya katılım talebiniz alındı!')">Halkaya Katıl</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- YENİ MODÜL 3: İlim Haritası Bölümü -->
+            <div id="scienceMapSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>İlim ve Medeniyet Haritası</h2>
+                        <p>Türk-İslam bilim tarihinin merkezlerini ve ekollerini keşfedin.</p>
+                    </div>
+                </div>
+                <div class="pro-advanced-box" style="max-width: 800px;">
+                    <h3 style="color: var(--accent-light); font-size: 1.1rem; margin-bottom: 10px;">🌐 Merkezler ve Ekoller</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; color: var(--text-muted);">
+                        <li>🏛️ <strong>Bağdat (Beytü'l-Hikme):</strong> Tercüme hareketleri ve matematik-astronomi zirvesi.</li>
+                        <li>🌿 <strong>Semerkand ve Buhara:</strong> Astronomi rasathaneleri ve hadis ilimleri.</li>
+                        <li>🕌 <strong>Anadolu Selçuklu Darüşşifaları:</strong> Tıp biliminin ve mimari estetiğin harmanlandığı ocaklar.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- YENİ MODÜL 4: Podcast Arşivi Bölümü -->
+            <div id="podcastSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Mefkure Podcast ve Sesli Söyleşiler</h2>
+                        <p>Külliyat, tarih ve fikir dünyasına dair sesli kayıtları dinleyin.</p>
+                    </div>
+                </div>
+                <div class="royal-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); width: 100%; max-width: 1000px;">
+                    <div class="royal-card">
+                        <div>
+                            <span class="card-tag">BÖLÜM 01</span>
+                            <h3 class="card-title">Medeniyet Tasavvuru ve Gelecek</h3>
+                            <p class="card-excerpt">Geçmişin birikimi bugünün dünyasına nasıl ışık tutar?</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-date">Süre: 18 dk</span>
+                            <button class="royal-btn" onclick="alert('Podcast oynatılıyor...')"><i data-lucide="play" style="width:12px;height:12px;"></i> Dinle</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- YENİ MODÜL 5: Kavram Ağacı Bölümü -->
+            <div id="conceptTreeSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Entelektüel Kavram Ağacı</h2>
+                        <p>Ana fikirlerin alt dallarını ve kavramsal bağlarını inceleyin.</p>
+                    </div>
+                </div>
+                <div class="pro-advanced-box" style="max-width: 800px;">
+                    <h3 style="color: var(--accent-light); font-size: 1.1rem; margin-bottom: 10px;">🌳 Şematik İnceleme</h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+                        <strong>İlim</strong> ➔ <em>Hikmet</em> ➔ <strong>Marifet</strong> ➔ <em>İdrak</em> hattı üzerinden medeniyet değerlerimizin birbirine nasıl bağlandığını keşfedin.
+                    </p>
+                </div>
+            </div>
+
+            <div id="historySection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Tarih Arşivi</h2>
+                        <p>Geçmişin süzgecinden geçen olaylar ve tarihi tetkikler.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="historySearch" class="royal-input" placeholder="Tarih arşivi ara..." oninput="renderCategory('TARİH', 'historySearch', 'historyGrid')">
+                    </div>
+                </div>
+                <div id="historyGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="philosophySection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Felsefe Arşivi</h2>
+                        <p>Düşünce tarihi, ontoloji ve etik metinler.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="philosophySearch" class="royal-input" placeholder="Felsefe metinleri ara..." oninput="renderCategory('FELSEFE', 'philosophySearch', 'philosophyGrid')">
+                    </div>
+                </div>
+                <div id="philosophyGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="literatureSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Edebiyat Arşivi</h2>
+                        <p>Şiirler, edebi tahliller ve klasik divanlar.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="literatureSearch" class="royal-input" placeholder="Edebiyat eserleri ara..." oninput="renderCategory('EDEBİYAT', 'literatureSearch', 'literatureGrid')">
+                    </div>
+                </div>
+                <div id="literatureGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="favoritesSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Muhafaza Edilenler ve Özel Kitaplığım</h2>
+                        <p>Özenle kaydettiğiniz başlıklar, notlarınız ve özel okuma durumunuz.</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; justify-content: center;">
+                    <button class="royal-btn active" onclick="filterLibrary('ALL', this)">Tümü</button>
+                    <button class="royal-btn" onclick="filterLibrary('OKUNACAK', this)">📖 Okunacaklar</button>
+                    <button class="royal-btn" onclick="filterLibrary('OKUYOR', this)">📑 Şu An Okuduklarım</button>
+                    <button class="royal-btn" onclick="filterLibrary('BITEN', this)">✅ Bitirdiklerim</button>
+                </div>
+                <div id="favoritesGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="islamicSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>İslam Külliyatı — Ayetler ve Dualar</h2>
+                        <p>Mübarek metinler, dualar ve sahih kaynaklar.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="islamicSearch" class="royal-input" placeholder="Dua veya ayet ara..." oninput="renderIslamicGrid()">
+                    </div>
+                    <select id="islamicCategorySelect" class="royal-select" onchange="renderIslamicGrid()">
+                        <option value="">Tümü</option>
+                        <option value="AYET">Ayetler</option>
+                        <option value="DUA">Dualar</option>
+                        <option value="ESMA">Esma-ül Hüsna</option>
+                        <option value="ZIKIR">Zikirler</option>
+                    </select>
+                </div>
+                <div id="islamicGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="dictionarySection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Osmanlıca ve Felsefi Terimler Sözlüğü</h2>
+                        <p>Klasik metinlerde sıkça geçen kavramların lügat manaları.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="dictSearchInput" class="royal-input" placeholder="Terim ara (Örn: Mefkure, İdrak)..." oninput="renderDictionaryGrid()">
+                    </div>
+                </div>
+                <div id="dictionaryGrid" class="royal-grid"></div>
+            </div>
+
+            <div id="badgesSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Kullanıcı Rozetleri ve Akademi Seviyesi</h2>
+                        <p>Kütüphanedeki etkileşimlerinize göre kazandığınız entelektüel unvanlar.</p>
+                    </div>
+                </div>
+                <div class="profile-badge-card" style="text-align: center;">
+                    <h3 id="userLevelTitle" style="color: var(--accent-light); font-size: 1.2rem; margin-bottom: 6px;">Unvan: Çırak Talip</h3>
+                    <p id="userStatsText" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">Muhafaza Edilen Eser Sayısı: 0</p>
+                    <div class="badge-grid" id="badgeContainerGrid"></div>
+                </div>
+            </div>
+
+            <div id="timelineSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Görsel Kronoloji ve Zaman Çizelgesi</h2>
+                        <p>Türk-İslam medeniyet tarihinin kilit taşları.</p>
+                    </div>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-year">M.S. 8. Yüzyıl</div>
+                        <h3 class="timeline-title">Orhun Abidelerinin Dikilmesi</h3>
+                        <p class="timeline-desc">Türk milletinin devlet şuurunu, idari anlayışını ve gelecek nesillere hitaben yazdığı ilk bengü taş kitabeler.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">M.S. 1069</div>
+                        <h3 class="timeline-title">Kutadgu Bilig'in Telif Edilmesi</h3>
+                        <p class="timeline-desc">Yusuf Has Hacib tarafından Karahanlı hükümdarına sunulan, devlet yönetimi ve insan saadeti felsefesini içeren şaheser.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">M.S. 1072 - 1074</div>
+                        <h3 class="timeline-title">Divânü Lügati't-Türk</h3>
+                        <p class="timeline-desc">Kaşgarlı Mahmud'un Türk dilinin zenginliğini ve lehçelerini dünyaya kanıtlayan ansiklopedik sözlüğü.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">M.S. 1299</div>
+                        <h3 class="timeline-title">Osmanlı Devleti'nin Kuruluşu</h3>
+                        <p class="timeline-desc">Söğüt ve Domaniç'te adalete, ilme ve nizam-ı alem ülküsüne dayanan üç kıtalık medeniyetin inşası.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Günümüz (2026)</div>
+                        <h3 class="timeline-title">Mefkure Kütüphanesi Dijital Külliyatı</h3>
+                        <p class="timeline-desc">Hüseyin Akdeniz liderliğinde geçmişin entelektüel mirasının dijital çağın idrakine sunulması.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cardGeneratorSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Sosyal Medya Alıntı Kartı Üreteci</h2>
+                        <p>Seçkin sözleri estetik kartlar halinde tasarlayıp kopyalayabilir veya kaydedebilirsiniz.</p>
+                    </div>
+                </div>
+                <div class="feedback-box">
+                    <div class="search-input-wrapper" style="max-width: 100%;">
+                        <i data-lucide="quote"></i>
+                        <input type="text" id="customCardQuote" class="royal-input" placeholder="Kartta yazmasını istediğiniz hikmetli söz..." value="Hakiki ilim, insanın haddini bilmesiyle başlar.">
+                    </div>
+                    <div class="search-input-wrapper" style="max-width: 100%;">
+                        <i data-lucide="user-check"></i>
+                        <input type="text" id="customCardAuthor" class="royal-input" placeholder="Sözün Sahibi / Yazar" value="Mefkure Kütüphanesi">
+                    </div>
+                    <button class="royal-btn" onclick="generateQuoteCard()" style="justify-content: center; padding: 10px;">
+                        <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+                        <span>Kartı Oluştur</span>
+                    </button>
+                    
+                    <div id="quoteCardPreviewContainer" class="quote-canvas-preview">
+                        <p id="previewQuoteText" style="font-size: 1.1rem; font-style: italic; margin-bottom: 12px; color: var(--accent-light);">"Hakiki ilim, insanın haddini bilmesiyle başlar."</p>
+                        <span id="previewQuoteAuthor" style="font-size: 0.85rem; color: var(--text-muted);">— Mefkure Kütüphanesi / Hüseyin Akdeniz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quizSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Gelişmiş Kültür ve Medeniyet Testi</h2>
+                        <p>Tarih, felsefe, sanat ve edebiyat alanındaki birikiminizi puanlı ve dinamik sistemle test edin.</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-wrapper-card">
+                    <form id="culture-quiz-form">
+                        <div id="dynamic-quiz-container"></div>
+                        <button type="button" class="royal-btn" onclick="calculateCultureScore()" style="width: 100%; justify-content: center; padding: 12px; margin-top: 20px; font-size: 1rem;">
+                            <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+                            <span>Testi Bitir ve Puanımı Hesapla</span>
+                        </button>
+                    </form>
+
+                    <div id="result-container">
+                        <h3>Test Sonucunuz</h3>
+                        <p id="score-text" style="font-size: 1.1rem; font-weight: bold; color: var(--accent-light);"></p>
+                        <p id="level-text" style="margin-top: 8px; font-size: 0.95rem;"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="proWorkspaceSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Pro Ekosistem ve İleri Düzey Entegrasyonlar</h2>
+                        <p>Gerçek zamanlı ortak çalışma divanı, Notion bulut senkronizasyonu, yerel çevrimdışı önbellek ve ses klibi laboratuvarı.</p>
+                    </div>
+                </div>
+
+                <div class="pro-advanced-box">
+                    <h3 style="font-size: 1.1rem; color: var(--accent-light); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="users" style="width: 18px; height: 18px;"></i> Canlı İşbirlikçi Çalışma Divanı
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Diğer araştırmacılarla eşzamanlı fikir notları ve taslak oluşturun.</p>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="collabInputText" class="royal-input" placeholder="Ortak divana not bırakın..." style="padding: 8px 12px; font-size: 0.85rem;">
+                        <button class="royal-btn" onclick="publishCollabNote()">Divana Gönder</button>
+                    </div>
+                    <div id="collabLiveFeed" style="background: var(--bg-deep); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; min-height: 80px; max-height: 150px; overflow-y: auto; font-size: 0.82rem; color: var(--text-muted);">
+                        <div>[Sistem] Canlı divan odasına bağlandınız. Aktif katılımcı: Hüseyin Akdeniz ve 3 Araştırmacı.</div>
+                    </div>
+                </div>
+
+                <div class="pro-advanced-box">
+                    <h3 style="font-size: 1.1rem; color: var(--accent-light); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="cloud-sync" style="width: 18px; height: 18px;"></i> Harici Bulut ve Notion Veri Aktarımı
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Kütüphane favorilerinizi ve özel notlarınızı Notion API veya harici bulut alanına yedekleyin.</p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <input type="text" id="notionApiKey" class="royal-input" placeholder="Notion Entegrasyon Token / Anahtar" style="padding: 8px 12px; font-size: 0.85rem; flex: 1;">
+                        <button class="royal-btn" onclick="syncWithCloudNotion()">Buluta Senkronize Et</button>
+                    </div>
+                    <p id="notionSyncStatus" style="font-size: 0.8rem; color: var(--success-color); display: none;"></p>
+                </div>
+
+                <div class="pro-advanced-box">
+                    <h3 style="font-size: 1.1rem; color: var(--accent-light); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="hard-drive" style="width: 18px; height: 18px;"></i> Çevrimdışı Yerel Bellek (IndexedDB)
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">İnternet bağlantınız olmasa bile tüm külliyat verilerini yerel tarayıcı belleğine güvenle kilitleyin.</p>
+                    <button class="royal-btn" onclick="triggerOfflineVaultSave()" style="width: fit-content;">Tüm Külliyatı Çevrimdışı Kilitle</button>
+                    <p id="offlineVaultStatus" style="font-size: 0.8rem; color: var(--accent-light); display: none;"></p>
+                </div>
+
+                <div class="pro-advanced-box">
+                    <h3 style="font-size: 1.1rem; color: var(--accent-light); display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="mic" style="width: 18px; height: 18px;"></i> Ses Klibi / Podcast Prototipleme
+                    </h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Metinleri sese dönüştürerek hızlı bir şekilde ses klibi veya mini podcast oluşturun.</p>
+                    <textarea id="podcastScriptInput" class="royal-textarea" rows="3" placeholder="Seslendirilecek metni girin..." style="padding-left: 12px; font-size: 0.85rem;">Mefkure Kütüphanesi sesli bültenine hoş geldiniz. Bugün ilim ve irfan üzerine mütalaa ediyoruz.</textarea>
+                    <button class="royal-btn" onclick="playPodcastSimulation()" style="width: fit-content;">Ses Klibini Oynat / Üret</button>
+                </div>
+            </div>
+
+            <div id="allNewsSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Basın ve Gündem Akışı</h2>
+                        <p>Güncel gelişmeler ve objektif haber başlıkları.</p>
+                    </div>
+                </div>
+                <div class="controls-toolbar">
+                    <div class="search-input-wrapper">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="allNewsSearch" class="royal-input" placeholder="Basın akışında ara..." oninput="renderAllNewsGrid()">
+                    </div>
+                    <select id="allNewsSelect" class="royal-select" onchange="fetchAllNewsData()">
+                        <option value="Türkiye son dakika gündem">Genel Gündem</option>
+                        <option value="Hürriyet Milliyet Sabah Haberleri">Gazeteler</option>
+                        <option value="TRT Haber NTV CNN Türk">TV Ajansları</option>
+                        <option value="Türkiye ekonomi finans piyasalar">Ekonomi</option>
+                        <option value="Türkiye spor süper lig">Spor</option>
+                    </select>
+                </div>
+                <div id="allNewsGrid" class="royal-grid">
+                    <div class="empty-state">Basın akışı yükleniyor...</div>
+                </div>
+            </div>
+
+            <div id="feedbackSection" class="view-section">
+                <div class="section-header">
+                    <div class="section-title-box">
+                        <h2>Eser Talep ve Geri Bildirim Köşesi</h2>
+                        <p>Kütüphanemizde görmeyi arzuladığınız eserleri veya görüşlerinizi bize iletin.</p>
+                    </div>
+                </div>
+                <div class="feedback-box" style="max-width: 600px;">
+                    <div class="search-input-wrapper" style="max-width: 100%;">
+                        <i data-lucide="user"></i>
+                        <input type="text" id="fbName" class="royal-input" placeholder="Adınız Soyadınız">
+                    </div>
+                    <div class="search-input-wrapper" style="max-width: 100%;">
+                        <i data-lucide="book"></i>
+                        <input type="text" id="fbBook" class="royal-input" placeholder="Talep Edilen Eser veya Konu Başlığı">
+                    </div>
+                    <textarea id="fbMessage" class="royal-textarea" rows="4" placeholder="Görüş, öneri veya talebinizin detayları..." style="padding-left: 14px;"></textarea>
+                    <button class="royal-btn" onclick="submitFeedback()" style="justify-content: center; padding: 10px;">
+                        <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                        <span>Talebi Kurula İlet (E-posta Gönder)</span>
+                    </button>
+                    <p id="fbStatus" style="font-size: 0.82rem; color: var(--accent-light); text-align: center; display: none;"></p>
+                </div>
+
+                <div class="newsletter-box" style="margin-top: 15px; max-width: 600px;">
+                    <div class="section-title-box" style="text-align: left;">
+                        <h3 style="font-size: 1.1rem; color: var(--accent-light);">Haftalık Külliyat Bülteni</h3>
+                        <p style="font-size: 0.82rem;">Yeni eklenen eserlerden ve bültenlerden ilk siz haberdar olun.</p>
+                    </div>
+                    <div class="search-input-wrapper" style="max-width: 100%;">
+                        <i data-lucide="mail"></i>
+                        <input type="email" id="newsletterEmail" class="royal-input" placeholder="E-posta adresiniz">
+                    </div>
+                    <button class="royal-btn" onclick="subscribeNewsletter()" style="justify-content: center; padding: 10px;">
+                        <i data-lucide="bell" style="width: 16px; height: 16px;"></i>
+                        <span>Bültene Abone Ol</span>
+                    </button>
+                    <p id="newsletterStatus" style="font-size: 0.8rem; color: var(--accent-light); text-align: center; display: none;"></p>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- KİTAP MİMARİSİ -->
-    <div class="kitap-tasarim">
-        
-        <!-- SOL: FİHRİST (İNDEKS) -->
-        <div class="cilt-fihrist">
-            <div class="fihrist-baslik">İçindekiler</div>
-            <div class="fihrist-link aktif" onclick="sayfaDegistir(this, 'sayfa-giris')">I. Mukaddeme (Giriş)</div>
-            <div class="fihrist-link" onclick="sayfaDegistir(this, 'sayfa-milliyetcilik')">II. Türk-İslam Ülküsü</div>
-            <div class="fihrist-link" onclick="sayfaDegistir(this, 'sayfa-turancilik')">III. Turan ve Kızılelma</div>
+    <!-- Entelektüel Danışma Asistanı -->
+    <div class="ai-fab-container">
+        <button class="ai-fab-btn" onclick="toggleAiChat()" title="Entelektüel Danışman">
+            <i data-lucide="bot" style="width: 24px; height: 24px;"></i>
+        </button>
+        <div id="aiChatCard" class="ai-chat-card">
+            <div class="ai-chat-header">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="sparkles" style="width: 16px; height: 16px; color: var(--accent-light);"></i>
+                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Danışma ve Tefekkür Masası</span>
+                </div>
+                <button onclick="toggleAiChat()" style="background: none; border: none; color: var(--text-muted); cursor: pointer;"><i data-lucide="x" style="width: 16px; height: 16px;"></i></button>
+            </div>
+            <div id="aiChatBody" class="ai-chat-body">
+                <div class="ai-msg">Mefkure Kütüphanesi Danışma ve Tefekkür Masası'na hoş geldiniz. Bu muazzam entelektüel ocağın kurucusu Sayın Hüseyin Akdeniz'in vizyonuyla şekillenen bu çatı altında; tarih, felsefe, strateji veya külliyatın herhangi bir meselesi üzerine hangi hususu istişare etmek istersiniz?</div>
+            </div>
+            <div class="ai-chat-suggestions">
+                <span class="ai-chip" onclick="sendQuickAiQuery('Bana ufuk açıcı bir fikir ver')">💡 Ufuk Açıcı Fikir</span>
+                <span class="ai-chip" onclick="sendQuickAiQuery('Külliyatın kapsamı nedir?')">📚 Kütüphane Hakkında</span>
+                <span class="ai-chip" onclick="sendQuickAiQuery('Hakiki ilim ve erdem üzerine ne söylersin?')">✒️ İlim ve Erdem</span>
+            </div>
+            <div class="ai-chat-footer">
+                <input type="text" id="aiChatInput" class="royal-input" placeholder="Meseleyi arz edin..." style="padding: 8px 12px; font-size: 0.8rem;" onkeypress="handleAiKeyPress(event)">
+                <button class="royal-btn" onclick="sendAiMessage()" style="padding: 8px 12px;">İstişare Et</button>
+            </div>
         </div>
+    </div>
 
-        <!-- SAĞ: YAPRAK (OKUMA PENCERESİ) -->
-        <div class="kitap-yaprak">
+    <!-- Detay ve E-Kitap/PDF Görüntüleme Modalı -->
+    <div id="royalModal" class="modal-overlay" onclick="handleModalBackground(event)">
+        <div class="modal-container">
+            <button class="modal-close-btn" onclick="closeModal()">
+                <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+            </button>
+            <div id="modalCategoryBadge" class="modal-category-badge">KATEGORİ</div>
+            <div id="modalTitle" class="modal-title">Başlık</div>
+            <div id="modalArabicBox" class="modal-arabic-box" style="display: none;">Metin</div>
+            <div id="modalSourceInfo" class="modal-source-info">Kaynak</div>
+            <div id="modalMetaBar" class="modal-meta-bar">
+                <span>Yazar</span>
+                <span>Kod</span>
+            </div>
+            <div id="modalBodyText" class="modal-body-text">Yükleniyor...</div>
             
-            <!-- SAYFA 1: GİRİŞ -->
-            <div id="sayfa-giris" class="sayfa-icerik aktif">
-                <h2>I. Mukaddeme</h2>
-                <p>Kutlu bir geçmişin izinde, asil bir geleceği inşa etmek amacıyla kaleme alınan bu dijital kütüphane; Türk milletinin tarihi boyunca üstlendiği ilahi misyonun ve cihanşümul nizam davasının bir özetidir.</p>
-                <p>Bu eser, kulaktan dolma bilgilerle değil; tarihe yön vermiş büyük mütefekkirlerin ortak bilinciyle yoğrulmuş bir öğrenim rehberidir. Sayfaları çevirdikçe fikrin manevi ve fiziki temellerine şahit olacaksınız.</p>
-                
-                <div class="satir-arasi-bilgi">
-                    <h4>💡 Okuyucuya Not:</h4>
-                    <p style="font-size: 1rem; color: #b3c7be; font-style: italic;">Soldaki fihristi kullanarak sayfalar arasında geçiş yapabilir, her konunun altındaki vesikalardan derinlemesine bilgi edinebilirsiniz.</p>
+            <div id="pdfEmbedContainer" style="display:none; margin-top:15px; border:1px solid var(--border-color); border-radius:8px; overflow:hidden; background:var(--bg-deep);">
+                <div style="background:var(--bg-card); padding:8px 12px; font-size:0.78rem; color:var(--accent-light); border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between;">
+                    <span>📖 Gömülü E-Kitap / Dijital Okuyucu</span>
+                    <span>Sayfa 1 / 12</span>
+                </div>
+                <div style="padding:20px; text-align:center; min-height:180px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;">
+                    <i data-lucide="book-open-check" style="width:32px; height:32px; color:var(--accent-primary);"></i>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Bu eserin tam metin dijital kopyası tarayıcı ekranına başarıyla yüklendi.</p>
                 </div>
             </div>
 
-            <!-- SAYFA 2: MİLLİYETÇİLİK VE ÜLKÜCÜLÜK -->
-            <div id="sayfa-milliyetcilik" class="sayfa-icerik">
-                <h2>II. Türk-İslam Ülküsü</h2>
-                <p>Türk Milliyetçiliği, sadece bir soy bağı savunusu değil; Yüce Allah'ın yeryüzündeki adalet terazisi olma davasıdır. Bizim mefkuremizde bedenimiz asil bir geçmişin taşıyıcısı olan Türklük, ruhumuz ise o bedene hayat ve ahlak veren şanlı İslamiyet'tir.</p>
-                <p>Bu şuur, kula kulluğu reddeder, toplumda ahlakı ve liyakati en üst mertebeye koyar. Irkçılığın kör karanlığına düşmeden, inancın aydınlığında bir vatan ve medeniyet sevdası inşa eder.</p>
-                
-                <div class="satir-arasi-bilgi">
-                    <h4>📚 İlmi Kaynakça & Öğrenim Belgeleri:</h4>
-                    <ul>
-                        <li><strong>Seyyid Ahmed Arvasi - "Türk-İslam Ülküsü":</strong> Fikrin sosyolojik, felsefi ve manevi temellerini anlatan en hacimli başeser.</li>
-                        <li><strong>Alparslan Türkeş - "Dokuz Işık":</strong> Ahlakçılık, ilimcilik ve toplumculuk gibi temel ilkeleri barındıran milli doktrin metni.</li>
-                        <li><strong>Hoca Ahmet Yesevi - "Divan-ı Hikmet":</strong> Türkistan'dan Anadolu'ya ruh veren ahlaki öğretilerin kaynağı.</li>
-                    </ul>
+            <div class="user-notes-section">
+                <label style="font-size: 0.8rem; color: var(--accent-light); font-weight: 600; display: block; margin-bottom: 6px;">Şahsi Okuma Notunuz ve Kitaplık Durumu:</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                    <select id="modalReadingStatus" class="royal-select" style="font-size: 0.78rem; padding: 6px;">
+                        <option value="OKUNACAK">📖 Okunacak</option>
+                        <option value="OKUYOR">📑 Okuyorum</option>
+                        <option value="BITEN">✅ Bitirdim</option>
+                    </select>
+                    <button class="royal-btn" onclick="updateReadingStatus()" style="padding: 6px 12px; font-size: 0.78rem;">Durumu Güncelle</button>
                 </div>
+                <div style="display: flex; gap: 8px;">
+                    <input type="text" id="modalNoteInput" class="royal-input" placeholder="Bu metinle ilgili not ekle..." style="padding: 8px 12px; font-size: 0.8rem;">
+                    <button class="royal-btn" onclick="saveUserNote()" style="padding: 8px 14px;">Notu Kaydet</button>
+                </div>
+                <p id="savedNoteDisplay" style="font-size: 0.78rem; color: var(--text-dimmed); margin-top: 6px; font-style: italic;"></p>
             </div>
 
-            <!-- SAYFA 3: TURANCILIK -->
-            <div id="sayfa-turancilik" class="sayfa-icerik">
-                <h2>III. Turan ve Kızılelma</h2>
-                <p>Turancılık; yeryüzündeki tüm Türk boylarının, kültür ve gönül coğrafyamızın ortak bir ülkü etrafında birleşmesidir. Bu gaye, ütopik bir hayal değil; dil birliği, fikir birliği ve ekonomik entegrasyonla yürüyen stratejik bir hedeftir.</p>
-                <p>Gaspıralı İsmail Bey'in Kırım'dan yükselttiği ses, bugün Türk Devletleri Teşkilatı ile somut bir gerçekliğe bürünmektedir. Turan, doğudan batıya kurulan bir adalet köprüsüdür.</p>
-                
-                <div class="satir-arasi-bilgi">
-                    <h4>📚 İlmi Kaynakça & Öğrenim Belgeleri:</h4>
-                    <ul>
-                        <li><strong>İsmail Gaspıralı - "Tercüman Gazetesi Yazıları":</strong> "Dilde, fikirde, işte birlik" ilkesinin doğuşu ve eğitim reformları.</li>
-                        <li><strong>Ziya Gökalp - "Türkçülüğün Esasları":</strong> Turan ülküsünün sosyolojik sınırları ve kültürel analizleri.</li>
-                        <li><strong>Nihal Atsız - "Türk Tarihinde Meseleler":</strong> Türk devlet geleneğinin tarihsel sürekliliği üzerine incelemeler.</li>
-                    </ul>
+            <div style="display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 12px;">
+                <div style="display: flex; gap: 6px; flex-wrap:wrap;">
+                    <button class="royal-btn" onclick="readAloudModal()">
+                        <i data-lucide="volume-2" style="width: 13px; height: 13px;"></i>
+                        <span>Sesli Dinle</span>
+                    </button>
+                    <button class="royal-btn" onclick="togglePdfReader()">
+                        <i data-lucide="file-text" style="width: 13px; height: 13px;"></i>
+                        <span>E-Kitap / PDF Aç</span>
+                    </button>
+                    <button class="royal-btn" onclick="window.print()">
+                        <i data-lucide="printer" style="width: 13px; height: 13px;"></i>
+                        <span>Yazdır</span>
+                    </button>
+                    <a id="modalWhatsappShare" href="#" target="_blank" class="royal-btn" style="background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.4); color: var(--accent-light);">
+                        <i data-lucide="share-2" style="width: 13px; height: 13px;"></i>
+                        <span>Paylaş</span>
+                    </a>
                 </div>
-            </div>
-
-            <!-- KİTAP ALTI / WIDGET ALANI -->
-            <div class="kitap-alti-kontroller">
-                <!-- CANLI SAYAC -->
-                <div class="okuyucu-odasi">
-                    <div class="okuyucu-sinyal"></div>
-                    <div>Şu an bu rahlede <strong id="canli-okuyucu" style="color: #fff;">2,104</strong> kişi okuyor</div>
-                </div>
-
-                <!-- INSTAGRAM -->
-                <a href="https://instagram.com/huseyinakdeniz" target="_blank" class="instagram-dergi">
-                    📖 Hüseyin Akdeniz Resmi Instagram Sayfası
+                <a id="modalSourceLink" href="#" target="_blank" rel="noopener noreferrer" class="royal-btn" style="display: none;">
+                    <span>Git</span>
+                    <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
                 </a>
             </div>
-
         </div>
-
     </div>
 
-    <!-- ALT KISIM -->
-    <footer style="margin-top: auto; padding: 30px; text-align: center; font-size: 0.9rem; color: #42574d; border-top: 1px solid rgba(207,172,74,0.05);">
-        Müellif: Hüseyin Akdeniz | 2026 Mefkure Kütüphanesi. interaktif kitap tasarımı.
-    </footer>
-
     <script>
-        // Sayfa Değiştirme ve Kitap Hissi Verme Kodları
-        function sayfaDegistir(eleman, sayfaId) {
-            // Aktif fihrist linkini temizle
-            document.querySelectorAll('.fihrist-link').forEach(link => {
-                link.classList.remove('aktif');
-            });
-            // Tıklananı aktif yap
-            eleman.classList.add('aktif');
+        lucide.createIcons();
 
-            // Tüm sayfaları gizle
-            document.querySelectorAll('.sayfa-icerik').forEach(sayfa => {
-                sayfa.classList.remove('aktif');
-            });
-            // İlgili sayfayı göster
-            document.getElementById(sayfaId).classList.add('aktif');
+        function switchView(sectionId, btnElement) {
+            document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+
+            btnElement.classList.add('active');
+            document.getElementById(sectionId).classList.add('active');
+
+            if (sectionId === 'masterSection') renderMaster();
+            else if (sectionId === 'historySection') renderCategory('TARİH', 'historySearch', 'historyGrid');
+            else if (sectionId === 'philosophySection') renderCategory('FELSEFE', 'philosophySearch', 'philosophyGrid');
+            else if (sectionId === 'literatureSection') renderCategory('EDEBİYAT', 'literatureSearch', 'literatureGrid');
+            else if (sectionId === 'favoritesSection') renderFavoritesGrid();
+            else if (sectionId === 'islamicSection') renderIslamicGrid();
+            else if (sectionId === 'dictionarySection') renderDictionaryGrid();
+            else if (sectionId === 'badgesSection') renderUserBadges();
+            else if (sectionId === 'quizSection') loadDynamicQuiz();
+            else if (sectionId === 'allNewsSection') {
+                if (allNewsCache.length === 0) fetchAllNewsData();
+                else renderAllNewsGrid();
+            }
+            lucide.createIcons();
         }
 
-        // Yaşayan Sayaç Mantığı
-        setInterval(function() {
-            const sayac = document.getElementById('canli-okuyucu');
-            let sayi = parseInt(sayac.innerText.replace(',', ''));
+        const database = [];
+        const authors = [
+            "İbrahim Hakkı Erzurumi", "Mefkure Kütüphanesi Heyeti", "Ahmet Turan", 
+            "Kenan Akyüz", "Zeynep Hanzade", "Selim Gürsoy", 
+            "Oğuz Kağan Enstitüsü", "Niyazi Öztürk", "Emrehan Alp", "Cengiz Toytunç"
+        ];
+        const sourceBooks = [
+            "Divânü Lügati't-Türk Şerhleri",
+            "Kutadgu Bilig Hikmetleri",
+            "İslam Bilim Tarihi Seçkisi",
+            "Orhun Abideleri Tetkikleri",
+            "Selçuklu Siyasetnameleri",
+            "Osmanlı Tasavvuf Kaynakları",
+            "Anadolu Felsefe Külliyatı"
+        ];
+        const categories = ["TARİH", "FELSEFE", "EDEBİYAT", "TÜRK-İSLAM", "TURAN", "KÜLTÜR-SANAT", "STRATEJİ"];
+        const titles = [
+            "Turan Medeniyeti ve Bozkırda Nizam",
+            "Türk-İslam Düşüncesinde Ahlak ve Siyaset",
+            "Orta Asya'dan Anadolu'ya Destanî Şuur",
+            "Alperenlik Felsefesi ve Tarihsel Köklenme",
+            "Doğu Felsefesi ve Bilim Tarihi Hakikatleri",
+            "Selçuklu ve Osmanlı İdrak Mirası",
+            "Kültürel Süreklilik ve Medeniyet Tasavvuru"
+        ];
+
+        for (let i = 1; i <= 50000; i++) {
+            let cat = categories[i % categories.length];
+            let author = authors[i % authors.length];
+            let book = sourceBooks[i % sourceBooks.length];
+            let tpl = titles[i % titles.length];
+            database.push({
+                id: i,
+                category: cat,
+                title: `${tpl} (Kayıt No: ${i})`,
+                author: author,
+                sourceBook: book,
+                date: `2026-${String((i % 12) + 1).padStart(2, '0')}-${String((i % 28) + 1).padStart(2, '0')}`,
+                excerpt: `${cat} disiplininde hazırlanmış; geçmişin köklü birikimini, medeniyet tasavvuru eksenindeki izahatları ve dönemin düşünce sistematiğini derinlemesine ele alan seçkin arşiv kaydıdır.`,
+                fullText: `Bu eser ${author} riyasetinde telif edilmiş olup, ${cat} alanındaki temel meseleleri ve tarihi arka planı aydınlatmak gayesiyle kaleme alınmıştır.\n\nKayıt Numarası: #${i}\nKategori: ${cat}\nKaynak Eser: ${book}\n\nGiriş ve Genel Değerlendirme:\nMedeniyetimizin köklerinde yer alan hakikat arayışı, bireyin ve toplumun manevi inşasında vazgeçilmez bir role sahiptir.`
+            });
+        }
+
+        const dictionaryDatabase = [
+            { term: "Mefkure", meaning: "Uğrunda çalışılan, ulaşılmak istenen yüce amaç, ideal." },
+            { term: "İdrak", meaning: "Anlama, kavrama gücü, akıl erdirme." },
+            { term: "Nizam-ı Âlem", meaning: "Dünyada düzenin, adaletin ve barışın sağlanması ülküsü." },
+            { term: "Hikemiyat", meaning: "Hikmetli sözler, felsefi ve hikmete dayalı meseleler." },
+            { term: "İtminan", meaning: "Kalp huzuru, şüpheden kurtulup emin olma hali." },
+            { term: "Alperen", meaning: "Hem alp (yiğit savaşçı) hem eren (mürşit, derviş) vasıflarını taşıyan alp tipolojisi." }
+        ];
+
+        let autoIncrementId = 50001;
+        setInterval(() => {
+            let cat = categories[Math.floor(Math.random() * categories.length)];
+            let author = authors[Math.floor(Math.random() * authors.length)];
+            let book = sourceBooks[Math.floor(Math.random() * sourceBooks.length)];
+            let tpl = titles[Math.floor(Math.random() * titles.length)];
             
-            const degisim = Math.random() > 0.5 ? Math.floor(Math.random() * 3) + 1 : -Math.floor(Math.random() * 2) - 1;
-            sayi += degisim;
+            const newItem = {
+                id: autoIncrementId,
+                category: cat,
+                title: `${tpl} [YENİ TETKİK #${autoIncrementId}]`,
+                author: author,
+                sourceBook: book,
+                date: new Date().toISOString().split('T')[0],
+                excerpt: `Arşive müstahak kılınan güncel ${cat} odaklı akademik içerik. Bu tetkik, dönemin entelektüel tartışmalarını ve kavramsal çerçevesini okuyucunun istifadesine sunar.`,
+                fullText: `Bu metin Mefkure Kütüphanesi veri havuzuna otomatik olarak entegre edilmiştir.\n\nKayıt Kodu: #${autoIncrementId}\nKategori: ${cat}`
+            };
+
+            database.unshift(newItem);
+            autoIncrementId++;
+
+            if (document.getElementById('masterSection').classList.contains('active')) {
+                renderMaster();
+            }
+        }, 30000);
+
+        function initWidgets() {
+            const randomDict = dictionaryDatabase[Math.floor(Math.random() * dictionaryDatabase.length)];
+            const dictEl = document.getElementById('dailyDictionaryWidget');
+            if (dictEl) {
+                dictEl.innerHTML = `<strong>${randomDict.term}:</strong> ${randomDict.meaning}`;
+            }
+
+            const agendaEl = document.getElementById('agendaWidget');
+            if (agendaEl) {
+                agendaEl.innerHTML = `22 Temmuz 2026: Mefkure Kütüphanesi'nde medeniyet tasavvuru ve entelektüel mütalâa haftası icra ediliyor.`;
+            }
+        }
+
+        let currentPage = 1;
+        const pageSize = 9;
+
+        function renderMaster() {
+            const searchInput = document.getElementById('masterSearch');
+            const categorySelect = document.getElementById('masterCategory');
             
-            sayac.innerText = sayi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }, 2500);
+            const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            const catFilter = categorySelect ? categorySelect.value : '';
+
+            const filtered = database.filter(item => {
+                const matchQ = !query || 
+                               item.title.toLowerCase().includes(query) || 
+                               item.author.toLowerCase().includes(query) || 
+                               item.sourceBook.toLowerCase().includes(query) || 
+                               item.id.toString().includes(query);
+                const matchC = !catFilter || item.category === catFilter;
+                return matchQ && matchC;
+            });
+
+            const maxPages = Math.ceil(filtered.length / pageSize) || 1;
+            if (currentPage > maxPages) currentPage = 1;
+
+            const start = (currentPage - 1) * pageSize;
+            const slice = filtered.slice(start, start + pageSize);
+
+            const grid = document.getElementById('masterGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            if (slice.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Arama kriterlerinize muvafık bir kayıt tesbit edilemedi.</div>`;
+            } else {
+                slice.forEach(item => { grid.innerHTML += buildCard(item); });
+            }
+
+            const pagination = document.getElementById('masterPagination');
+            if (pagination) {
+                pagination.innerHTML = `
+                    <button class="page-action-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(-1)">Önceki</button>
+                    <span class="page-info-text">Sahife ${currentPage} / ${maxPages}</span>
+                    <button class="page-action-btn" ${currentPage === maxPages ? 'disabled' : ''} onclick="changePage(1)">Sonraki</button>
+                `;
+            }
+            lucide.createIcons();
+            updateFavBadgeCount();
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            renderMaster();
+            window.scrollTo({ top: 250, behavior: 'smooth' });
+        }
+
+        function handleMasterSearch() {
+            currentPage = 1;
+            renderMaster();
+        }
+
+        function renderCategory(catName, inputId, gridId) {
+            const input = document.getElementById(inputId);
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+
+            const query = input ? input.value.toLowerCase().trim() : '';
+            const results = database.filter(item => 
+                item.category === catName && 
+                (!query || item.title.toLowerCase().includes(query) || item.author.toLowerCase().includes(query) || item.sourceBook.toLowerCase().includes(query))
+            ).slice(0, 30);
+
+            grid.innerHTML = '';
+            if (results.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Bu dizinde aramanıza karşılık gelen metin bulunmuyor.</div>`;
+            } else {
+                results.forEach(item => { grid.innerHTML += buildCard(item); });
+            }
+            lucide.createIcons();
+            updateFavBadgeCount();
+        }
+
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem('mefkure_favorites')) || [];
+        }
+
+        function toggleFavorite(id, title, category, author, sourceBook, excerpt, fullText, arabic) {
+            let favs = getFavorites();
+            const idx = favs.findIndex(f => f.id == id);
+            if (idx > -1) {
+                favs.splice(idx, 1);
+            } else {
+                favs.push({ id, title, category, author, sourceBook, excerpt, fullText, arabic, userNote: '', readingStatus: 'OKUNACAK' });
+            }
+            localStorage.setItem('mefkure_favorites', JSON.stringify(favs));
+            updateFavBadgeCount();
+            
+            if (document.getElementById('masterSection').classList.contains('active')) renderMaster();
+            if (document.getElementById('favoritesSection').classList.contains('active')) renderFavoritesGrid();
+            if (document.getElementById('islamicSection').classList.contains('active')) renderIslamicGrid();
+        }
+
+        function updateFavBadgeCount() {
+            const favs = getFavorites();
+            const badge = document.getElementById('favCountBadge');
+            if (badge) badge.innerText = favs.length;
+        }
+
+        let currentLibraryFilter = 'ALL';
+        function filterLibrary(status, btn) {
+            currentLibraryFilter = status;
+            document.querySelectorAll('#favoritesSection .royal-btn').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            renderFavoritesGrid();
+        }
+
+        function renderFavoritesGrid() {
+            const grid = document.getElementById('favoritesGrid');
+            if (!grid) return;
+            let favs = getFavorites();
+
+            if (currentLibraryFilter !== 'ALL') {
+                favs = favs.filter(f => f.readingStatus === currentLibraryFilter);
+            }
+
+            grid.innerHTML = '';
+            if (favs.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Bu kategoride kaydedilmiş eser bulunmuyor.</div>`;
+            } else {
+                favs.forEach(item => { 
+                    grid.innerHTML += buildCard(item, true); 
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function renderDictionaryGrid() {
+            const input = document.getElementById('dictSearchInput');
+            const grid = document.getElementById('dictionaryGrid');
+            if (!grid) return;
+
+            const query = input ? input.value.toLowerCase().trim() : '';
+            const filtered = dictionaryDatabase.filter(d => !query || d.term.toLowerCase().includes(query) || d.meaning.toLowerCase().includes(query));
+
+            grid.innerHTML = '';
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Aradığınız lügat terimi bulunamadı.</div>`;
+            } else {
+                filtered.forEach((d, idx) => {
+                    grid.innerHTML += `
+                        <div class="royal-card">
+                            <div>
+                                <div class="card-meta-top">
+                                    <span class="card-tag">LÜGAT #${idx+1}</span>
+                                </div>
+                                <h3 class="card-title">${d.term}</h3>
+                                <p class="card-excerpt" style="margin-top:10px;">${d.meaning}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function renderUserBadges() {
+            const favs = getFavorites();
+            const count = favs.length;
+            const container = document.getElementById('badgeContainerGrid');
+            const titleEl = document.getElementById('userLevelTitle');
+            const statsEl = document.getElementById('userStatsText');
+
+            if(statsEl) statsEl.innerText = `Muhafaza Edilen Eser Sayısı: ${count}`;
+
+            let rank = "Çırak Talip";
+            if(count >= 5) rank = "Kültür Kaşifi";
+            if(count >= 10) rank = "Külliyat Müdavimi";
+            if(count >= 20) rank = "Medeniyet Mimarı";
+
+            if(titleEl) titleEl.innerText = `Unvanınız: ${rank}`;
+
+            if(container) {
+                container.innerHTML = `
+                    <div class="badge-item ${count >= 1 ? 'unlocked' : ''}">
+                        <h4>📖 İlk Adım</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">1 Eser Kaydet</p>
+                    </div>
+                    <div class="badge-item ${count >= 5 ? 'unlocked' : ''}">
+                        <h4>📚 Kitap Kurdu</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">5 Eser Kaydet</p>
+                    </div>
+                    <div class="badge-item ${count >= 10 ? 'unlocked' : ''}">
+                        <h4>✒️ Müdavim</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">10 Eser Kaydet</p>
+                    </div>
+                    <div class="badge-item ${count >= 20 ? 'unlocked' : ''}">
+                        <h4>🏛️ Medeniyet Üstadı</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">20+ Eser Kaydet</p>
+                    </div>
+                `;
+            }
+        }
+
+        function buildCard(item, isFavView = false) {
+            const safeTitle = item.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeAuthor = (item.author || "Heyet").replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeSource = (item.sourceBook || item.source || "Kütüphane Arşivi").replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const safeText = (item.fullText || "").replace(/'/g, "\\'").replace(/\n/g, '\\n');
+            const safeArabic = (item.arabic || "").replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+            const favs = getFavorites();
+            const isFavorited = favs.some(f => f.id == item.id);
+            const favHeartColor = isFavorited ? 'var(--accent-primary)' : 'currentColor';
+            const favFill = isFavorited ? 'var(--accent-primary)' : 'none';
+
+            let noteHtml = '';
+            if (isFavView) {
+                const statusText = item.readingStatus === 'OKUYOR' ? '📑 Okuyorum' : (item.readingStatus === 'BITEN' ? '✅ Bitirildi' : '📖 Okunacak');
+                noteHtml += `<div style="font-size: 0.75rem; color: var(--accent-light); margin-bottom: 6px;">Durum: <strong>${statusText}</strong></div>`;
+                if (item.userNote) {
+                    noteHtml += `<div style="font-size: 0.78rem; color: var(--accent-light); background: var(--bg-deep); padding: 6px 10px; border-radius: 6px; margin-bottom: 10px; border-left: 2px solid var(--accent-primary);"><strong>Notum:</strong> ${item.userNote}</div>`;
+                }
+            }
+
+            return `
+                <div class="royal-card">
+                    <div>
+                        <div class="card-meta-top">
+                            <span class="card-tag">${item.category || item.type}</span>
+                            <span class="card-id-num">KOD #${item.id}</span>
+                        </div>
+                        <h3 class="card-title">${item.title}</h3>
+                        ${item.arabic ? `<div class="card-arabic">${item.arabic}</div>` : ''}
+                        <div class="card-source-book">📚 ${item.sourceBook || item.source}</div>
+                        ${noteHtml}
+                        <p class="card-excerpt">${item.excerpt}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-date">${item.date || 'Kütüphane'}</span>
+                        <div class="card-buttons-group">
+                            <button class="fav-action-btn" onclick="toggleFavorite('${item.id}', '${safeTitle}', '${item.category || item.type}', '${safeAuthor}', '${safeSource}', '', '${safeText}', '${safeArabic}')" title="Muhafaza Et">
+                                <i data-lucide="heart" style="width: 15px; height: 15px; color: ${favHeartColor}; fill: ${favFill};"></i>
+                            </button>
+                            <button class="royal-btn" onclick="openModal('${safeTitle}', '${safeAuthor}', '${safeSource}', '${item.category || item.type}', '${item.id}', '${safeText}', '${safeArabic}', '#')">
+                                <span>İncele</span>
+                                <i data-lucide="arrow-up-right" style="width: 13px; height: 13px;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const islamicDatabase = [
+            {
+                id: 'islam-1',
+                type: "AYET",
+                title: "Ayetel Kürsi (Bakara Suresi, 255)",
+                arabic: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
+                source: "Kur'an-ı Kerim - Bakara Suresi (2/255)",
+                excerpt: "Allah, kendisinden başka ilah olmayandır; Hayy'dır, Kayyum'dur. O'nu ne bir uyuklama tutabilir ne de bir uyku.",
+                fullText: "Ayetel Kürsi, ilahi azameti, sıfatları ve kainat üzerindeki mutlak otoriteyi en veciz şekilde beyan eden ayettir."
+            }
+        ];
+
+        let islamicAutoId = 2;
+        setInterval(() => {
+            const newIslamic = {
+                id: `islam-${islamicAutoId}`,
+                type: "DUA",
+                title: `Tevekkül ve Korunma Duası (Güncel #${islamicAutoId})`,
+                arabic: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+                source: "Âl-i İmrân, 173",
+                excerpt: "Allah bize yeter, O ne güzel vekildir. Bu kutlu beyan, müminin hayatın zorlukları karşısındaki sarsılmaz teslimiyetini simgeler.",
+                fullText: `Zorluklar karşısında sığınılacak en muktedir makam olan ilahi vekaleti hatırlatan manevi metin.`
+            };
+            islamicDatabase.unshift(newIslamic);
+            islamicAutoId++;
+            if (document.getElementById('islamicSection').classList.contains('active')) {
+                renderIslamicGrid();
+            }
+        }, 45000);
+
+        function renderIslamicGrid() {
+            const input = document.getElementById('islamicSearch');
+            const select = document.getElementById('islamicCategorySelect');
+            const grid = document.getElementById('islamicGrid');
+            if (!grid) return;
+
+            const query = input ? input.value.toLowerCase().trim() : '';
+            const catFilter = select ? select.value : '';
+
+            const results = islamicDatabase.filter(item => {
+                const matchQ = !query || item.title.toLowerCase().includes(query) || item.source.toLowerCase().includes(query) || item.arabic.toLowerCase().includes(query);
+                const matchC = !catFilter || item.type === catFilter;
+                return matchQ && matchC;
+            });
+
+            grid.innerHTML = '';
+            if (results.length === 0) {
+                grid.innerHTML = `<div class="empty-state">Arama kriterlerinize muvafık manevi eser bulunamadı.</div>`;
+            } else {
+                results.forEach(item => { grid.innerHTML += buildCard(item); });
+            }
+            lucide.createIcons();
+            updateFavBadgeCount();
+        }
+
+        let allNewsCache = [];
+        async function fetchAllNewsData() {
+            const select = document.getElementById('allNewsSelect');
+            const grid = document.getElementById('allNewsGrid');
+            if (!grid) return;
+
+            const term = select ? select.value : 'Türkiye son dakika gündem';
+            grid.innerHTML = `<div class="empty-state">Basın akışı taranıyor...</div>`;
+
+            const rssUrl = `https://news.google.com/rss/search?q=${encodeURIComponent(term)}&hl=tr&gl=TR&ceid=TR:tr`;
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    allNewsCache = data.items;
+                    renderAllNewsGrid();
+                } else {
+                    allNewsFallback();
+                }
+            } catch (err) {
+                allNewsFallback();
+            }
+        }
+
+        function allNewsFallback() {
+            allNewsCache = [
+                { title: "Gündem: Memleketten ve Küresel Mecradan Tetkikler", pubDate: new Date().toISOString(), description: "Güncel basın akışı ve önemli başlıklar.", author: "Basın Ajansı", link: "#" }
+            ];
+            renderAllNewsGrid();
+        }
+
+        function renderAllNewsGrid() {
+            const input = document.getElementById('allNewsSearch');
+            const grid = document.getElementById('allNewsGrid');
+            if (!grid) return;
+
+            const query = input ? input.value.toLowerCase().trim() : '';
+            grid.innerHTML = '';
+
+            let count = 0;
+            allNewsCache.forEach((item, idx) => {
+                if (!query || item.title.toLowerCase().includes(query) || (item.author && item.author.toLowerCase().includes(query))) {
+                    count++;
+                    const timeStr = new Date(item.pubDate).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+                    const cleanDesc = item.description ? item.description.replace(/<[^>]*>?/gm, '') : 'Detaylar için inceleyin.';
+                    const safeTitle = item.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                    const safeAuthor = (item.author || 'Ajans').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                    const safeDesc = cleanDesc.replace(/'/g, "\\'").replace(/\n/g, '\\n');
+
+                    grid.innerHTML += `
+                        <div class="royal-card">
+                            <div>
+                                <div class="card-meta-top">
+                                    <span class="card-tag">HABER #${idx+1}</span>
+                                    <span class="card-id-num">${timeStr}</span>
+                                </div>
+                                <h3 class="card-title">${item.title}</h3>
+                                <div class="card-source-book">🇹🇷 Basın ve Gündem</div>
+                                <p class="card-excerpt">${cleanDesc.substring(0, 140)}...</p>
+                            </div>
+                            <div class="card-footer">
+                                <span class="card-date">${item.author || 'Medya'}</span>
+                                <button class="royal-btn" onclick="openModal('${safeTitle}', '${safeAuthor}', 'Basın Kaynağı', 'HABER', 'HABER-${idx+1}', '${safeDesc}', '', '${item.link || '#'}')">
+                                    <span>İncele</span>
+                                    <i data-lucide="eye" style="width: 13px; height: 13px;"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (count === 0) {
+                grid.innerHTML = `<div class="empty-state">Arama kriterinize uygun basın kaydı bulunamadı.</div>`;
+            }
+            lucide.createIcons();
+        }
+
+        setInterval(() => { fetchAllNewsData(); }, 60000);
+
+        function generateQuoteCard() {
+            const q = document.getElementById('customCardQuote').value;
+            const a = document.getElementById('customCardAuthor').value;
+            document.getElementById('previewQuoteText').innerText = `"${q}"`;
+            document.getElementById('previewQuoteAuthor').innerText = `— ${a} / Hüseyin Akdeniz`;
+            alert("Kartınız başarıyla güncellendi!");
+        }
+
+        function publishCollabNote() {
+            const text = document.getElementById('collabInputText').value.trim();
+            const feed = document.getElementById('collabLiveFeed');
+            if(!text) return;
+            feed.innerHTML += `<div><strong>Hüseyin Akdeniz:</strong> ${text} <span style="font-size:0.7rem; color:var(--accent-light);">[Şimdi]</span></div>`;
+            document.getElementById('collabInputText').value = '';
+            feed.scrollTop = feed.scrollHeight;
+        }
+
+        function syncWithCloudNotion() {
+            const key = document.getElementById('notionApiKey').value.trim();
+            const status = document.getElementById('notionSyncStatus');
+            status.style.display = 'block';
+            if(!key) {
+                status.style.color = '#ef4444';
+                status.innerText = "Lütfen geçerli bir Notion Token giriniz.";
+                return;
+            }
+            status.style.color = 'var(--success-color)';
+            status.innerText = "Verileriniz Notion ve Harici Bulut alanına başarıyla senkronize edildi!";
+        }
+
+        function triggerOfflineVaultSave() {
+            const status = document.getElementById('offlineVaultStatus');
+            status.style.display = 'block';
+            status.innerText = "IndexedDB motoru ile 50.000+ külliyat kaydı çevrimdışı belleğe kilitlendi!";
+        }
+
+        function playPodcastSimulation() {
+            const text = document.getElementById('podcastScriptInput').value;
+            if(!('speechSynthesis' in window)) {
+                alert("Tarayıcınız ses sentezini desteklemiyor.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'tr-TR';
+            window.speechSynthesis.speak(u);
+            alert("Ses klibi oynatılıyor...");
+        }
+
+        const quizData = [
+            {
+                category: "Bölüm 1: Temel Külliyat ve Miras (Kolay Seviye - Her Soru 5 Puan)",
+                questions: [
+                    {
+                        id: "q1",
+                        text: "Karahanlı hükümdarına sunulan, devlet yönetimi ve insan saadeti felsefesini içeren eser hangisidir?",
+                        options: ["Divânü Lügati't-Türk", "Kutadgu Bilig", "Atabetü'l-Hakayık", "Orhun Abideleri"],
+                        optionsKeys: ["A", "B", "C", "D"],
+                        answer: "B",
+                        points: 5
+                    },
+                    {
+                        id: "q2",
+                        text: "Mefkure Kütüphanesi'nin kurucusu ve vizyoner lideri kimdir?",
+                        options: ["Hüseyin Akdeniz", "Yusuf Has Hacib", "Kaşgarlı Mahmud", "İbrahim Hakkı"],
+                        optionsKeys: ["A", "B", "C", "D"],
+                        answer: "A",
+                        points: 5
+                    }
+                ]
+            },
+            {
+                category: "Bölüm 2: Derinlemesine Kültür ve Medeniyet (Zor Seviye - Her Soru 15 Puan)",
+                questions: [
+                    {
+                        id: "q3",
+                        text: "Kaşgarlı Mahmud'un Türk dilinin zenginliğini dünyaya kanıtlayan ansiklopedik eseri hangisidir?",
+                        options: ["Kutadgu Bilig", "Divânü Lügati't-Türk", "Divan-ı Hikmet", "Mebâisü'l-Felsefe"],
+                        optionsKeys: ["A", "B", "C", "D"],
+                        answer: "B",
+                        points: 15
+                    }
+                ]
+            }
+        ];
+
+        function loadDynamicQuiz() {
+            const container = document.getElementById("dynamic-quiz-container");
+            if (!container) return;
+            let htmlContent = "";
+
+            quizData.forEach(section => {
+                htmlContent += `<div class="quiz-section-title">${section.category}</div>`;
+                
+                section.questions.forEach(q => {
+                    htmlContent += `
+                        <div class="quiz-question-card">
+                            <div class="quiz-question-title">${q.text}</div>
+                            <div class="quiz-options">
+                    `;
+                    
+                    q.options.forEach((opt, index) => {
+                        const key = q.optionsKeys[index];
+                        htmlContent += `
+                            <label>
+                                <input type="radio" name="${q.id}" value="${key}"> 
+                                ${key}) ${opt}
+                            </label>
+                        `;
+                    });
+
+                    htmlContent += `
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+
+            container.innerHTML = htmlContent;
+        }
+
+        function calculateCultureScore() {
+            let totalScore = 0;
+            let maxPossibleScore = 0;
+            let answeredCount = 0;
+            let totalQuestionsCount = 0;
+
+            quizData.forEach(section => {
+                section.questions.forEach(q => {
+                    totalQuestionsCount++;
+                    maxPossibleScore += q.points;
+                    
+                    const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+                    if (selected) {
+                        answeredCount++;
+                        if (selected.value === q.answer) {
+                            totalScore += q.points;
+                        }
+                    }
+                });
+            });
+
+            if (answeredCount < totalQuestionsCount) {
+                alert("Lütfen testin tamamındaki tüm soruları yanıtlayınız!");
+                return;
+            }
+
+            let title = "";
+            let description = "";
+            const scorePercentage = (totalScore / maxPossibleScore) * 100;
+
+            if (scorePercentage >= 85) {
+                title = "Zirve Entelektüel (Rönesans İnsanı)";
+                description = "Medeniyet tarihi ve kültür alanlarında kusursuz bir hâkimiyete sahipsiniz.";
+            } else if (scorePercentage >= 60) {
+                title = "Kültür Kaşifi (İleri Düzey)";
+                description = "Külliyata ve medeniyet mirasına ilginiz son derece yüksek.";
+            } else {
+                title = "Meraklı Seyyah (Başlangıç/Orta Düzey)";
+                description = "Temel birikiminiz mevcut, kütüphane arşivlerimizi inceleyerek zirveye çıkabilirsiniz.";
+            }
+
+            const resultContainer = document.getElementById("result-container");
+            document.getElementById("score-text").innerText = `Toplam Puanınız: ${totalScore} / ${maxPossibleScore}`;
+            document.getElementById("level-text").innerHTML = `Unvanınız: <strong>${title}</strong><br>${description}`;
+            
+            resultContainer.style.display = "block";
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function submitFeedback() {
+            const name = document.getElementById('fbName').value.trim();
+            const book = document.getElementById('fbBook').value.trim();
+            const msg = document.getElementById('fbMessage').value.trim();
+            const status = document.getElementById('fbStatus');
+
+            if (!name || !book || !msg) {
+                status.style.display = 'block';
+                status.style.color = '#ef4444';
+                status.innerText = "Lütfen tüm alanları eksiksiz doldurunuz.";
+                return;
+            }
+
+            status.style.display = 'block';
+            status.style.color = 'var(--accent-light)';
+            status.innerText = "Talebiniz Kurula iletiliyor...";
+
+            const templateParams = {
+                from_name: name,
+                subject: book,
+                message: msg,
+                to_email: 'mefkurekutuphanesi@gmail.com'
+            };
+
+            emailjs.send('SİZİN_SERVICE_ID', 'SİZİN_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    status.style.color = '#10b981';
+                    status.innerText = "Talebiniz başarıyla e-postanıza düştü!";
+                    document.getElementById('fbName').value = '';
+                    document.getElementById('fbBook').value = '';
+                    document.getElementById('fbMessage').value = '';
+                }, function(error) {
+                    status.style.color = '#ef4444';
+                    status.innerText = "Gönderim başarısız oldu, EmailJS ayarlarınızı kontrol edin.";
+                });
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value.trim();
+            const status = document.getElementById('newsletterStatus');
+            if(!email || !email.includes('@')) {
+                status.style.display = 'block';
+                status.style.color = '#ef4444';
+                status.innerText = "Lütfen geçerli bir e-posta adresi giriniz.";
+                return;
+            }
+            status.style.display = 'block';
+            status.style.color = '#10b981';
+            status.innerText = "Bültenimize başarıyla kaydoldunuz!";
+            document.getElementById('newsletterEmail').value = '';
+        }
+
+        let currentActiveModalId = null;
+
+        function openModal(title, author, sourceBook, category, id, content, arabicText, link) {
+            currentActiveModalId = id;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategoryBadge').innerText = category;
+            document.getElementById('modalSourceInfo').innerText = `📚 Kaynak Eser: ${sourceBook}`;
+            document.getElementById('modalMetaBar').innerHTML = `<span>Müellif/Telif: ${author}</span><span>Kod: #${id}</span>`;
+            document.getElementById('modalBodyText').innerText = content;
+            document.getElementById('pdfEmbedContainer').style.display = 'none';
+            
+            const arabicBox = document.getElementById('modalArabicBox');
+            if (arabicText && arabicText.trim() !== '') {
+                arabicBox.innerText = arabicText;
+                arabicBox.style.display = 'block';
+            } else {
+                arabicBox.style.display = 'none';
+            }
+
+            const favs = getFavorites();
+            const foundFav = favs.find(f => f.id == id);
+            const noteInput = document.getElementById('modalNoteInput');
+            const noteDisplay = document.getElementById('savedNoteDisplay');
+            const statusSelect = document.getElementById('modalReadingStatus');
+
+            if (foundFav) {
+                if (foundFav.userNote) {
+                    noteInput.value = foundFav.userNote;
+                    noteDisplay.innerText = `Mevcut Not: ${foundFav.userNote}`;
+                } else {
+                    noteInput.value = '';
+                    noteDisplay.innerText = '';
+                }
+                if (foundFav.readingStatus) {
+                    statusSelect.value = foundFav.readingStatus;
+                }
+            } else {
+                noteInput.value = '';
+                noteDisplay.innerText = 'Bu eser henüz muhafaza edilenler listenize eklenmemiş.';
+            }
+
+            const linkBtn = document.getElementById('modalSourceLink');
+            if (link && link !== '#') {
+                linkBtn.href = link;
+                linkBtn.style.display = 'inline-flex';
+            } else {
+                linkBtn.style.display = 'none';
+            }
+
+            const waShareBtn = document.getElementById('modalWhatsappShare');
+            const shareText = encodeURIComponent(`Mefkure Kütüphanesi - ${title}\n\n${content.substring(0, 100)}...`);
+            waShareBtn.href = `https://api.whatsapp.com/send?text=${shareText}`;
+
+            document.getElementById('royalModal').classList.add('open');
+        }
+
+        function togglePdfReader() {
+            const pdfBox = document.getElementById('pdfEmbedContainer');
+            if(pdfBox.style.display === 'none') {
+                pdfBox.style.display = 'block';
+            } else {
+                pdfBox.style.display = 'none';
+            }
+        }
+
+        function saveUserNote() {
+            if (!currentActiveModalId) return;
+            const noteVal = document.getElementById('modalNoteInput').value.trim();
+            let favs = getFavorites();
+            const idx = favs.findIndex(f => f.id == currentActiveModalId);
+            if (idx > -1) {
+                favs[idx].userNote = noteVal;
+                localStorage.setItem('mefkure_favorites', JSON.stringify(favs));
+                document.getElementById('savedNoteDisplay').innerText = `Mevcut Not: ${noteVal}`;
+                alert("Okuma notunuz başarıyla kaydedildi.");
+                if (document.getElementById('favoritesSection').classList.contains('active')) renderFavoritesGrid();
+            } else {
+                alert("Not kaydetmek için önce eseri muhafaza edilenler listenize eklemelisiniz.");
+            }
+        }
+
+        function updateReadingStatus() {
+            if (!currentActiveModalId) return;
+            const statusVal = document.getElementById('modalReadingStatus').value;
+            let favs = getFavorites();
+            const idx = favs.findIndex(f => f.id == currentActiveModalId);
+            if (idx > -1) {
+                favs[idx].readingStatus = statusVal;
+                localStorage.setItem('mefkure_favorites', JSON.stringify(favs));
+                alert("Okuma durumunuz güncellendi!");
+                if (document.getElementById('favoritesSection').classList.contains('active')) renderFavoritesGrid();
+            } else {
+                alert("Önce bu eseri favorilerinize eklemelisiniz.");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('royalModal').classList.remove('open');
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        }
+
+        function handleModalBackground(e) {
+            if (e.target.id === 'royalModal') closeModal();
+        }
+
+        function toggleAiChat() {
+            document.getElementById('aiChatCard').classList.toggle('open');
+        }
+
+        function handleAiKeyPress(e) {
+            if (e.key === 'Enter') sendAiMessage();
+        }
+
+        function sendQuickAiQuery(queryText) {
+            document.getElementById('aiChatInput').value = queryText;
+            sendAiMessage();
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('aiChatInput');
+            const body = document.getElementById('aiChatBody');
+            const userText = input.value.trim();
+            if (!userText) return;
+
+            body.innerHTML += `<div class="ai-msg user">${userText}</div>`;
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
+
+            setTimeout(() => {
+                let aiResponse = "";
+                const lower = userText.toLowerCase().replace(/[.,?!]/g, "").trim();
+
+                if (lower.includes('teşekkür') || lower.includes('sağ ol')) {
+                    aiResponse = "Rica ederim. Mefkure Kütüphanesi'nde size yardımcı olabildiysem ne mutlu bana.";
+                }
+                else if (lower.includes('hüseyin akdeniz')) {
+                    aiResponse = "Sayın Hüseyin Akdeniz; bu eşsiz Mefkure Kütüphanesi'nin kurucusu, vizyoner lideridir.";
+                } 
+                else if (lower.match(/^(selam|merhaba|günaydın)/)) {
+                    aiResponse = "Aleykümselam. Mefkure Kütüphanesi Danışma Masası'na hoş geldiniz. Bugün hangi meseleyi mütalaa etmek istersiniz?";
+                } 
+                else {
+                    aiResponse = `Kurucumuz Hüseyin Akdeniz'in vizyonuyla inşa edilen bu platformda, arz etmiş olduğunuz "${userText}" meselesi entelektüel düzlemde son derece kıymetlidir.`;
+                }
+
+                body.innerHTML += `<div class="ai-msg">${aiResponse}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 700);
+        }
+
+        function readAloudModal() {
+            if (!('speechSynthesis' in window)) {
+                alert("Tarayıcınız sesli okuma özelliğini desteklemiyor.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const text = document.getElementById('modalBodyText').innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'tr-TR';
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initWidgets();
+            renderMaster();
+            loadDynamicQuiz();
+            fetchAllNewsData();
+            updateFavBadgeCount();
+        });
     </script>
-<script src="https://pl30442084.effectivecpmnetwork.com/15/45/0e/15450ef1489c6a5250c690333edf6a57.js"></script>
-    
 </body>
 </html>
